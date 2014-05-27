@@ -5,12 +5,14 @@
 
 #include "seriesReader.h"
 
+// базовый класс для  предугадывания
+
 class TsPredictor {
 protected:
 	SeriesReader* reader;
 
 public:
-	TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader) {};
+    TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader) {}
 
 	void setReader(SeriesReader* newReader) {
 		if ( newReader != NULL ) {

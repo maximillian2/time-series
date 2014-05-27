@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 
+// базовый класс с интрефейсом для заполнения временного ряда
+
 using namespace std;
 
 class SeriesReader {
