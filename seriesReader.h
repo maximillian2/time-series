@@ -10,10 +10,10 @@ using namespace std;
 
 class SeriesReader {
 protected:
-	map<string, string> tSeries;
+	map<string, double> tSeries;
 
 public:
-	virtual map<string, string> getSeries() { return tSeries; }
+	virtual map<string, double> getSeries() { return tSeries; }
 };
 
 #endif
