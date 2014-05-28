@@ -18,6 +18,7 @@ public:
     
 private slots:
     void on_fillPushButton_clicked();
+    void applicationExit();
 
 private:
     Ui::MainWindow *ui;

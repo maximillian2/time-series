@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->tableView->horizontalHeader()->hide();
     ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+
+    connect(ui->actionExit, SIGNAL(activated()), this, SLOT(applicationExit()));
 }
 
 MainWindow::~MainWindow()
@@ -18,20 +20,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_fillPushButton_clicked()
 {
-//    model->setHorizontalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text())));
-//    model->setHorizontalHeaderItem(1, new QStandardItem(QString(ui->valuePerUnitEdit->text())));
-        for (int row = 0; row < 2; ++row)
+    for (int row = 0; row < 2; ++row)
+    {
+        for (int column = 0; column < ui->spinBox->value(); ++column)
         {
-            for (int column = 0; column < ui->spinBox->value(); ++column)
-            {
-//                QString text = QString('A' + row) + QString::number(column + 1);
-                QStandardItem* item = new QStandardItem();
-                model->setVerticalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text())));
-                model->setVerticalHeaderItem(1, new QStandardItem(QString(ui->valuePerUnitEdit->text()))  );
-                model->setItem(row, column, item);
-            }
-         }
+            QStandardItem* item = new QStandardItem();
+            model->setVerticalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text())));
+            model->setVerticalHeaderItem(1, new QStandardItem(QString(ui->valuePerUnitEdit->text())));
+            model->setItem(row, column, item);
+        }
+    }
+    ui->tableView->setModel(model);
+}
 
-        ui->tableView->setModel(model);
-
+void MainWindow::applicationExit()
+{
+    QCoreApplication::exit();
 }
