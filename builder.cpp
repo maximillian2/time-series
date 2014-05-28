@@ -2,20 +2,27 @@
 
 #include <map>
 #include <string>
+#include <math.h>
+#include <QDebug>
 
-Builder::Builder(map <string, string> tSeries, int view_height, int view_width)
+Builder::Builder(map<string, double> tSeries, int view_height, int view_width, QGraphicsScene *scene)
 {
     s_map = tSeries;
     height = view_height;
     width = view_width;
+    drawingScene = scene;
+
+    //find interval
+    dx=width/(*s_map.end()).second-(*s_map.begin()).second+2;
+    dy=height/(s_map.size()+2);
+
+
+    //find centrum
+    x0=fabs(1*dx)+dx;
+    y0=fabs(2*dy);
 }
 
 void Builder::drawOsi()
 {
-//    int x0,y0;
-//    float dx,dy;
-//    dx=width/(s_map.end()-s_map.begin()+2);
-//    dy=height/(y_max-y_min+2);
-//    x0=fabs(xbegin*dx)+dx;
-//    y0=fabs(y_min*dy)+dy;
+drawingScene->addLine(0,y0, width,y0);
 }

@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <map>
+#include <string>
+using namespace std;
 
 namespace Ui {
 class Scene;
@@ -15,6 +18,9 @@ class Scene : public QMainWindow
 public:
     explicit Scene(QWidget *parent = 0);
     ~Scene();
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::Scene *ui;
