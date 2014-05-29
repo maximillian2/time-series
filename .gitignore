@@ -1,3 +1,6 @@
 ## Qt Creator 
 *.user
 *.autosave
+
+## 
+*.o
