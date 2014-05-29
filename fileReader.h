@@ -33,11 +33,14 @@ public:
 
 		while ( source ) {
 			/*k - key; v - value . (c) captain */
-			string K, V;  
+			string K;
+			double V;  
 			char delim;  // delimiter
 
 			source >> K >> delim >> V;
-			tSeries[K] = V;
+			
+			keys  .push_back(K);
+			values.push_back(V);
 
 			source >> delim;
 		}
