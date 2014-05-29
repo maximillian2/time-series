@@ -35,4 +35,5 @@ void Scene::on_pushButton_clicked()
     series_map.insert(pair <string, double>("2001", 876));
     Builder build(series_map, ui->graphicsView->height(), ui->graphicsView->width(), scene);
     build.drawOsi();
+    build.drawSeries();
 }
