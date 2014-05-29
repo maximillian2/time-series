@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+//#include "seriesReader.h"
+#include <map>
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +22,10 @@ private slots:
     void on_fillPushButton_clicked();
     void applicationExit();
 
+    void on_calculatePushButton_clicked();
+
 private:
+    std::map<std::string, double> localMap;
     Ui::MainWindow *ui;
     QStandardItemModel *model;
 };

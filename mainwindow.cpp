@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
+#include <QListIterator>
+#include <vector>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -36,4 +39,19 @@ void MainWindow::on_fillPushButton_clicked()
 void MainWindow::applicationExit()
 {
     QCoreApplication::exit();
+}
+
+void MainWindow::on_calculatePushButton_clicked()
+{
+    for(int i = 0; i < model->columnCount(); i++)
+    {
+        localMap.insert(std::make_pair(model->item(0, i)->text().toStdString(), model->item(1,i)->text().toDouble()));
+//        localMap[model->item(0, i)->text()] = model->item(1,i)->text().toDouble();
+//        localMap.insert(std::pair<std::string, double>(model->item(0, i)->text(), model->item(1, i)->text().toDouble()));
+    }
+
+    for(auto it : localMap)
+        qDebug() << it.first << ' ' << it.second ;
+//    for(auto it = localMap.begin(); it != localMap.end(); ++it)
+//        qDebug() << it->first << ' ' << it->second;
 }

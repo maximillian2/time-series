@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 TARGET = time-series
 TEMPLATE = app
@@ -13,13 +13,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS += mainwindow.h \
     tsPrediction.h \
     seriesReader.h \
     fileReader.h \
     consoleReader.h
 
-FORMS    += mainwindow.ui
+FORMS += mainwindow.ui
 
 RESOURCES += \
     images.qrc
+
+CONFIG += c++11
