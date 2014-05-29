@@ -41,13 +41,13 @@ void MainWindow::on_fillPushButton_clicked()
 
 void MainWindow::on_calculatePushButton_clicked()
 {
-    for(int i = 0; i < model->columnCount(); i++)
-    {
-        localMap.insert(std::make_pair(model->item(0, i)->text().toStdString(), model->item(1,i)->text().toDouble()));
-    }
+//    for(int i = 0; i < model->columnCount(); i++)
+//    {
+//        localMap.insert(std::make_pair(model->item(0, i)->text().toStdString(), model->item(1,i)->text().toDouble()));
+//    }
 
-    for(std::map<std::string, double>::iterator it = localMap.begin(); it != localMap.end(); ++it)
-        qDebug() << (*it).first;
+//    for(std::map<std::string, double>::iterator it = localMap.begin(); it != localMap.end(); ++it)
+//        qDebug() << (*it).first;
 
     scene->show();
 }

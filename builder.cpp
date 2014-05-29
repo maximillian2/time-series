@@ -12,6 +12,9 @@ Builder::Builder(map<string, double> tSeries, int view_height, int view_width, Q
     width = view_width;
     drawingScene = scene;
 
+    min_y = 0;
+    max_y = 0;
+
     //find interval dx
     dx=width/(s_map.size()+2);
 
@@ -37,23 +40,25 @@ Builder::Builder(map<string, double> tSeries, int view_height, int view_width, Q
 
 void Builder::drawOsi()
 {
-//axis
-drawingScene->addLine(10,0+height/15,10,height-height/20,QPen());//y_axis
-drawingScene->addLine(10,height-height/20,width-width/20,height-height/20,QPen());//x_axis
+    //axis
+    drawingScene->addLine(10,0+height/15,10,height-height/20,QPen());//y_axis
+    drawingScene->addLine(10,height-height/20,width-width/20,height-height/20,QPen());//x_axis
 
-//arrows
-drawingScene->addLine(width-width/20,height-height/20,width-width/10,height-height/27,QPen());
-drawingScene->addLine(width-width/20,height-height/20,width-width/10,height-height/17,QPen());
+    //arrows
+    drawingScene->addLine(width-width/20,height-height/20,width-width/10,height-height/27,QPen());
+    drawingScene->addLine(width-width/20,height-height/20,width-width/10,height-height/17,QPen());
 
-drawingScene->addLine(10,0+height/15,10+width/100,0+height/8,QPen());
-drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
+    drawingScene->addLine(10,0+height/15,10+width/100,0+height/8,QPen());
+    drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
 
-//notches
-for(int i = 0; i < s_map.size(); i++)
-    drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
-if(dy<10) dy *= 10;
-for(int i = 0; height-height/20-dy*(i+1) > 0+height/15+2*dy; i++)
-    drawingScene->addLine(7,height-height/20-dy*(i+1),13,height-height/20-dy*(i+1),QPen());
+    //notches
+    for(unsigned int i = 0; i < s_map.size(); i++)
+        drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
 
-QGraphicsTextItem *text = drawingScene->addText("© Г.Д. aka Morphei, 2014",QFont());
+    if(dy<10) dy *= 10;
+
+    for(unsigned int i = 0; height-height/20-dy*(i+1) > 0+height/15+2*dy; i++)
+        drawingScene->addLine(7,height-height/20-dy*(i+1),13,height-height/20-dy*(i+1),QPen());
+
+    QGraphicsTextItem *text = drawingScene->addText(QObject::tr("© Г.Д. aka Morphei, 2014"),QFont());
 }
