@@ -4,24 +4,29 @@
 #
 #-------------------------------------------------
 
-QT += core gui
+QT       += core gui
+QT       += widgets
 
 TARGET = time-series
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    scene.cpp \
+    builder.cpp
 
-HEADERS += mainwindow.h \
+HEADERS  += mainwindow.h \
     tsPrediction.h \
     seriesReader.h \
     fileReader.h \
-    consoleReader.h
+    consoleReader.h \
+    scene.h \
+    builder.h
 
-FORMS += mainwindow.ui
+FORMS    += mainwindow.ui \
+    scene.ui
 
 RESOURCES += \
     images.qrc
 
-CONFIG += c++11

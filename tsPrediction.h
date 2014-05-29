@@ -2,7 +2,6 @@
 #define PREDICTION_H
 
 #include <string>
-#include <map>
 
 #include "seriesReader.h"
 
@@ -11,9 +10,6 @@
 class TsPredictor {
 protected:
 	SeriesReader* reader;
-
-	map<string, double> predictedValues;  //  Prediction algorithms gonna fill this map;   
-
 
 public:
     TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader) {}
