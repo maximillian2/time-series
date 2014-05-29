@@ -3,12 +3,13 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
-//#include "seriesReader.h"
-#include <map>
+#include "scene.h"
 
 namespace Ui {
 class MainWindow;
 }
+
+class Builder;
 
 class MainWindow : public QMainWindow
 {
@@ -20,14 +21,13 @@ public:
     
 private slots:
     void on_fillPushButton_clicked();
-    void applicationExit();
 
     void on_calculatePushButton_clicked();
 
 private:
-    std::map<std::string, double> localMap;
     Ui::MainWindow *ui;
     QStandardItemModel *model;
+    Scene *scene;
 };
 
 #endif // MAINWINDOW_H
