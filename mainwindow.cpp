@@ -61,9 +61,14 @@ void MainWindow::on_calculatePushButton_clicked()
     }
 
     predictor->predict(ui->partsSpinBox->text().toInt());
+<<<<<<< HEAD
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
+=======
+    scene = new Scene(values /*source vector*/, predictor->getResultValues() /* result vector */ );
+
+>>>>>>> 3520b1a8e25ac169eed3eb6226fd9a0a6f2129e7
     scene->show();
 }
 
