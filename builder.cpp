@@ -43,6 +43,15 @@ Builder::Builder(vector<double> sourceSeries, vector<double> predictSeries, int 
     //find centrum
     x0=10;
     y0=height;//-height/20;
+
+    //find step
+    if(max_y > 1000)
+        step = dy*125;
+    else if(max_y > 100)
+        step = dy*12;
+    else if (max_y > 10)
+        step = dy;
+     qDebug() << step;
 }
 
 void Builder::drawOsi()
@@ -59,14 +68,15 @@ void Builder::drawOsi()
     drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
 
     //notches
-    for(int i = 0; i < size; i++)
+
+    for(int i = 0; i < size-1; i++)
         drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
 
-    if(dy<10) dy *= 10;
-    for(int i = 0; height-height/20-dy*(i+1) > 0+height/15+2*dy; i++)
-        drawingScene->addLine(7,height-height/20-dy*(i+1),13,height-height/20-dy*(i+1),QPen());
+    for(int i = y0-y0/15; i > 0+height/15+step*2; i= i-step)
+        drawingScene->addLine(7,i,13,i,QPen());//y notches
 
     QGraphicsTextItem *text = drawingScene->addText("(c) G.D. aka Morphei, 2014",QFont());
+
 }
 
 void Builder::drawSeries()
@@ -74,7 +84,7 @@ void Builder::drawSeries()
     int j = 0, i = 0, i_next = 1;
     for(i_next; i_next < size; i_next++)
     {
-        drawingScene->addLine(x0+dx*j,allSeries[i]/2, x0+dx*(j+1), allSeries[i_next]/2, QPen());
+        drawingScene->addLine(x0+dx*j,allSeries[i]/step, x0+dx*(j+1), allSeries[i_next]/step, QPen());
         j++;
         i++;
     }

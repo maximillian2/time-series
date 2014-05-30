@@ -6,19 +6,30 @@
 #include <QtDebug>
 #include <QFileDialog>
 #include <QtDebug>
+<<<<<<< HEAD
+=======
+#include <iostream>
+#include "bayesian.h"
+#include<iostream>
+#include "seriesReader.h"
+#include "seriesReader.h"
+>>>>>>> ad32e3b6fdc5f5f3147cfa7e2906f4f097d163f5
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
+    SeriesReader* sr = new FileReader("test.txt");
 
     // default predictor type
-    predictor = new Bayesian();
+    predictor = new Bayesian(sr);
 
     ui->tableView->horizontalHeader()->hide();
 
-//    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
@@ -57,8 +68,23 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(ui->partsSpinBox->text().toInt());
-    scene = new Scene(values /*source vector*/, predictor->getResultValues() /* result vector */ );
+    predictor->predict(24);//ui->partsSpinBox->text().toInt());
+
+    vector<double> temp = predictor->getResultValues();
+
+//    for ( int i = 0; i < temp.size(); ++i ) {
+//        std::cerr << temp[i] << std::endl;
+//    }
+
+//    temp = predictor->getSourceValues();
+//    std::cerr << "Sources" << std::endl;
+
+//    for ( int i = 0; i < temp.size(); ++i ) {
+//        std::cerr << temp[i] << std::endl;
+//    }
+
+
+    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
     scene->show();
 }
@@ -106,7 +132,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     {
     case 0:
         delete predictor;
-        predictor  = new Bayesian();
+//        predictor  = new Bayesian();
     break;
 
     case 1:

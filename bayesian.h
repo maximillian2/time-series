@@ -3,13 +3,14 @@
 
 #include "fileReader.h"
 #include "tsPrediction.h"
+#include "seriesReader.h"
 
 #include <new>
 
 class Bayesian : public TsPredictor {
 public:
 
-	Bayesian() : TsPredictor(new FileReader("test.txt")) {}
+    Bayesian(SeriesReader* sr) : TsPredictor(sr) {}
 
 
     //  Only filled  result vectors.
@@ -158,20 +159,20 @@ public:
 				double sum = 0;
 				int counter = 0;
 
-                for (int i = 0; i < resultKeys.size(); ++i)
-				{
-                    std::cout << resultKeys[i] << "  " << resultValues[i] << std::endl;
+//                for (int i = 0; i < resultKeys.size(); ++i)
+//				{
+//                    std::cout << resultKeys[i] << "  " << resultValues[i] << std::endl;
 
-					counter++;
-                    sum += resultValues[i];
+//					counter++;
+//                    sum += resultValues[i];
 					
-					if (counter == partsInSeason) {
-						std::cout << "\nTotal : " << sum <<"\n\n";
-						counter = 0;
-						sum = 0;
-					}
+//					if (counter == partsInSeason) {
+//						std::cout << "\nTotal : " << sum <<"\n\n";
+//						counter = 0;
+//						sum = 0;
+//					}
 					
-				}
+//				}
 
 
 				break;
