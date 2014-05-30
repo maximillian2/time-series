@@ -21,8 +21,9 @@ protected:
 	vector<double> predictedValues;  //  Prediction algorithms gonna fill this map;   
 
 	int partsInSeason;   // Only for season variation
-public:
+
 	enum {WITH_SEASONAL_VARIATON, WITHOUT_SEASONAL_VARIATON} seriesType;
+public:	
 
 	void setPartsInSeason(int parts) {
 		if ( parts > 0 ) {
@@ -30,7 +31,7 @@ public:
 		}
 	}
 
-    TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader) {}
+    TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader), partsInSeason(12), seriesType(WITH_SEASONAL_VARIATON) {}
 
 	void setReader(SeriesReader* newReader) {
 		if ( newReader != NULL ) {

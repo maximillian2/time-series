@@ -8,7 +8,8 @@
 
 class Bayesian : public TsPredictor {
 public:
-	Bayesian() : TsPredictor(new FileReader("test.txt")){}
+
+	Bayesian() : TsPredictor(new FileReader("test.txt")) {}
 
 	void predict(int times) {
 
