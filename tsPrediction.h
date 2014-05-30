@@ -31,19 +31,19 @@ public:
     vector<double> getResultValues() { return resultValues; }
 
 
-	void setPartsInSeason(int parts) {
+    void setPartsInSeason(int parts) {
 //		if ( parts > 0 ) {
 //			partsInSeason = parts;
 //		}
-	}
+    }
 
     TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader), partsInSeason(12), seriesType(WITH_SEASONAL_VARIATON) {}
 
-	void setReader(SeriesReader* newReader) {
+    void setReader(SeriesReader* newReader) {
 //		if ( newReader != NULL ) {
 //			reader = newReader;
 //		}
-	}
+    }
 
 
 	/*Method will make a prediction according to required value

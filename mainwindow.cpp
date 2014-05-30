@@ -2,30 +2,21 @@
 #include "ui_mainwindow.h"
 #include "scene.h"
 #include "bayesian.h"
+#include "seriesReader.h"
 
 #include <QtDebug>
 #include <QFileDialog>
 #include <QtDebug>
-<<<<<<< HEAD
-=======
-#include <iostream>
-#include "bayesian.h"
-#include<iostream>
-#include "seriesReader.h"
-#include "seriesReader.h"
->>>>>>> ad32e3b6fdc5f5f3147cfa7e2906f4f097d163f5
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
-    SeriesReader* sr = new FileReader("test.txt");
+//    SeriesReader* sr = new FileReader("test.txt");
 
     // default predictor type
-    predictor = new Bayesian(sr);
+//    predictor = new Bayesian(sr);
 
     ui->tableView->horizontalHeader()->hide();
 
@@ -68,9 +59,9 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(24);//ui->partsSpinBox->text().toInt());
+//    predictor->predict(24);//ui->partsSpinBox->text().toInt());
 
-    vector<double> temp = predictor->getResultValues();
+//    vector<double> temp = predictor->getResultValues();
 
 //    for ( int i = 0; i < temp.size(); ++i ) {
 //        std::cerr << temp[i] << std::endl;
@@ -84,9 +75,9 @@ void MainWindow::on_calculatePushButton_clicked()
 //    }
 
 
-    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
+//    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
-    scene->show();
+//    scene->show();
 }
 
 void MainWindow::exitApplication()
@@ -96,11 +87,11 @@ void MainWindow::exitApplication()
 
 void MainWindow::openFile()
 {
-    if ( !fileReader )
-        delete fileReader;
+//    if ( !fileReader )
+//        delete fileReader;
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
-    fileReader = new FileReader(fileName.toStdString());
+//    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+//    fileReader = new FileReader(fileName.toStdString());
 }
 
 void MainWindow::saveFile()
@@ -110,7 +101,7 @@ void MainWindow::saveFile()
 
 void MainWindow::on_onSeasonRadioButton_clicked()
 {
-    predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
+//    predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
     ui->partsLabel->show();
@@ -119,7 +110,7 @@ void MainWindow::on_onSeasonRadioButton_clicked()
 
 void MainWindow::on_offSeasonRadioButton_clicked()
 {
-    predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
+//    predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
     ui->partsLabel->hide();
     ui->partsSpinBox->hide();
@@ -131,7 +122,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     switch(index)
     {
     case 0:
-        delete predictor;
+//        delete predictor;
 //        predictor  = new Bayesian();
     break;
 

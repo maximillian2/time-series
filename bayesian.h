@@ -32,7 +32,7 @@ public:
 
 				// ++it;
 				
-				for (int i = 1; i < sourceKeys.size()-1 ; ++i) {
+                for (unsigned int i = 1; i < sourceKeys.size()-1 ; ++i) {
 					double average = sourceValues[i]; 
 
 					for ( int j = 1; j <= 1; j ++ ) {
@@ -60,7 +60,7 @@ public:
 					movingAverageValues.push_back((sourceValues[lastSource]+sourceValues[lastSource-1]+sourceValues[lastSource-2]) / 3.0);
 				}
 
-                for (int i = 0; i < resultValues.size() ; ++i)
+                for (unsigned int i = 0; i < resultValues.size() ; ++i)
 				{
                     std::cout << resultValues[i] << std::endl;
 				}
@@ -136,7 +136,7 @@ public:
 
 				double Yx = 0, sumX= 0, xq= 0, Y= 0;
 
-				for (int i = 1 ; i <= sourceValues.size(); ++i ) {
+                for (unsigned int i = 1 ; i <= sourceValues.size(); ++i ) {
 					Yx 	 += i * sourceValues[i-1];
 					sumX += i;
 					xq   += i * i;
@@ -151,13 +151,13 @@ public:
 
 
 				
-				for (int i = sourceValues.size(); i < sourceValues.size() + times; i++) {
+                for (unsigned int i = sourceValues.size(); i < sourceValues.size() + times; i++) {
                     resultKeys  .push_back(sourceKeys[i%sourceValues.size()]);
                     resultValues.push_back((a*i+b)*partIndexes[i%partsInSeason]);
 				}
 
-				double sum = 0;
-				int counter = 0;
+//				double sum = 0;
+//				int counter = 0;
 
 //                for (int i = 0; i < resultKeys.size(); ++i)
 //				{
