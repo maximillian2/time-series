@@ -22,7 +22,8 @@ HEADERS  += mainwindow.h \
     fileReader.h \
     consoleReader.h \
     scene.h \
-    builder.h
+    builder.h \
+    bayesian.h
 
 FORMS    += mainwindow.ui \
     scene.ui
@@ -31,3 +32,5 @@ RESOURCES += \
     images.qrc
 
 CONFIG += c++11
+
+OTHER_FILES +=

@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
     ui->tableView->horizontalHeader()->hide();
-    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    //ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 }
 
 MainWindow::~MainWindow()

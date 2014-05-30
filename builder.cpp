@@ -54,6 +54,7 @@ void Builder::drawOsi()
     //notches
     for(int i = 0; i < s_map.size(); i++)
         drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
+
     if(dy<10) dy *= 10;
     for(int i = 0; height-height/20-dy*(i+1) > 0+height/15+2*dy; i++)
         drawingScene->addLine(7,height-height/20-dy*(i+1),13,height-height/20-dy*(i+1),QPen());
