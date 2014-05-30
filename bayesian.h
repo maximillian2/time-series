@@ -7,18 +7,8 @@
 #include <new>
 
 class Bayesian : public TsPredictor {
-	int partsInSeason;   // Only for season variation
-
-	enum {WITH_SEASONAL_WARIATON, WITHOUT_SEASONAL_WARIATON} seriesType;
-
 public:
-	Bayesian() : TsPredictor(new FileReader("test.txt")), partsInSeason(4), seriesType(WITH_SEASONAL_WARIATON) {}
-
-	void setPartsInSeason(int parts) {
-		if ( parts > 0 ) {
-			partsInSeason = parts;
-		}
-	}
+	Bayesian() : TsPredictor(new FileReader("test.txt")){}
 
 	void predict(int times) {
 
@@ -27,7 +17,7 @@ public:
 
 		switch ( seriesType ) {
 			
-			case ( WITHOUT_SEASONAL_WARIATON ) : {
+			case ( WITHOUT_SEASONAL_VARIATON ) : {
 				
 				const int N = 3; // 
 
@@ -59,22 +49,23 @@ public:
 					value += (1.0/3.0)*(sourceValues[sourceValues.size()-1] - sourceValues[sourceValues.size()-2]);
 				
 					sourceValues.push_back(value);
+					predictedValues.push_back(value);
 
 					int lastSource = sourceValues.size()-1;
 
 					movingAverageValues.push_back((sourceValues[lastSource]+sourceValues[lastSource-1]+sourceValues[lastSource-2]) / 3.0);
 				}
 
-				for (int i = 0; i < sourceValues.size() ; ++i)
+				for (int i = 0; i < predictedValues.size() ; ++i)
 				{
-					std::cout << sourceValues[i] << std::endl;
+					std::cout << predictedValues[i] << std::endl;
 				}
 
 			break;
 
 			}
 
-			case (WITH_SEASONAL_WARIATON) : {
+			case (WITH_SEASONAL_VARIATON) : {
 				int seasons = sourceValues.size() / partsInSeason;
 				int seasSumAmnt = seasons * partsInSeason - partsInSeason + 1;
 
@@ -135,6 +126,8 @@ public:
 					}
 
 					partIndexes[i] /= seasons-1;
+
+					// std :: cout << partIndexes[i] << std::endl;
 				}
 
 				double Yx = 0, sumX= 0, xq= 0, Y= 0;
@@ -155,14 +148,28 @@ public:
 
 				
 				for (int i = sourceValues.size(); i < sourceValues.size() + times; i++) {
-					predictedKeys  .push_back(string("s"));
+					predictedKeys  .push_back(sourceKeys[i%sourceValues.size()]);
 					predictedValues.push_back((a*i+b)*partIndexes[i%partsInSeason]); 
 				}
+
+				double sum = 0;
+				int counter = 0;
 
 				for (int i = 0; i < predictedKeys.size(); ++i)
 				{
 					std::cout << predictedKeys[i] << "  " << predictedValues[i] << std::endl;
+
+					counter++;
+					sum += predictedValues[i];
+					
+					if (counter == partsInSeason) {
+						std::cout << "\nTotal : " << sum <<"\n\n";
+						counter = 0;
+						sum = 0;
+					}
+					
 				}
+
 
 				break;
 			}

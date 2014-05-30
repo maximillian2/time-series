@@ -7,7 +7,7 @@
 #include "seriesReader.h"
 
 using std::string;
-using std::map;
+using std::vector;
 // базовый класс для  предугадывания
 
 class TsPredictor {
@@ -20,7 +20,15 @@ protected:
 	vector<string> predictedKeys;	
 	vector<double> predictedValues;  //  Prediction algorithms gonna fill this map;   
 
+	int partsInSeason;   // Only for season variation
 public:
+	enum {WITH_SEASONAL_VARIATON, WITHOUT_SEASONAL_VARIATON} seriesType;
+
+	void setPartsInSeason(int parts) {
+		if ( parts > 0 ) {
+			partsInSeason = parts;
+		}
+	}
 
     TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader) {}
 

@@ -4,7 +4,7 @@
 int main() {
 	Bayesian b;
 
-	b.predict(8);
+	b.predict(2);
 
 	return 0;
 }
