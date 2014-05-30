@@ -1,20 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "scene.h"
+#include "bayesian.h"
+
 #include <QtDebug>
-#include <QTextCodec>
 #include <QFileDialog>
 #include <QtDebug>
-#include <iostream>
-#include "bayesian.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    //QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
+
+    // default predictor type
     predictor = new Bayesian();
 
     ui->tableView->horizontalHeader()->hide();
@@ -24,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(activated()), this, SLOT(saveFile()));
+
+    ui->offSeasonRadioButton->setChecked(true);
+    ui->partsLabel->hide();
+    ui->partsSpinBox->hide();
 }
 
 MainWindow::~MainWindow()
@@ -68,9 +71,7 @@ void MainWindow::exitApplication()
 void MainWindow::openFile()
 {
     if ( !fileReader )
-    {
         delete fileReader;
-    }
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     fileReader = new FileReader(fileName.toStdString());
@@ -85,11 +86,17 @@ void MainWindow::on_onSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
+
+    ui->partsLabel->show();
+    ui->partsSpinBox->show();
 }
 
 void MainWindow::on_offSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
+
+    ui->partsLabel->hide();
+    ui->partsSpinBox->hide();
 }
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
@@ -117,7 +124,5 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 //        predictor = new MarkovModel();
 
     break;
-
-
     }
 }

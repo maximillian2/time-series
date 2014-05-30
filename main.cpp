@@ -1,17 +1,3 @@
-//#include "bayesian.h"
-//#include "tsPrediction.h"
-
-//int main() {
-//	Bayesian b;
-
-//	b.predict(24);
-
-//	return 0;
-//}
-
-
-
-
  #include <QApplication>
  #include "mainwindow.h"
 

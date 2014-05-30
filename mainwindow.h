@@ -3,8 +3,6 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include <map>
-#include <QMap>
 #include "scene.h"
 #include "fileReader.h"
 #include "seriesReader.h"
@@ -27,11 +25,8 @@ public:
 private slots:
     void on_fillPushButton_clicked();
     void on_calculatePushButton_clicked();
-
     void on_onSeasonRadioButton_clicked();
-
     void on_offSeasonRadioButton_clicked();
-
     void on_comboBox_currentIndexChanged(int index);
 
 public slots:
@@ -44,9 +39,7 @@ private:
     QStandardItemModel *model;
     Scene *scene;
     TsPredictor *predictor;
-//    QMap<std::string, double> localMap;
     FileReader *fileReader;
-//    std::map<std::string, double> localMap;
 };
 
 #endif // MAINWINDOW_H
