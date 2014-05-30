@@ -60,15 +60,24 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(ui->partsSpinBox->text().toInt());
-<<<<<<< HEAD
+    predictor->predict(24);//ui->partsSpinBox->text().toInt());
+
+    vector<double> temp = predictor->getResultValues();
+
+//    for ( int i = 0; i < temp.size(); ++i ) {
+//        std::cerr << temp[i] << std::endl;
+//    }
+
+//    temp = predictor->getSourceValues();
+//    std::cerr << "Sources" << std::endl;
+
+//    for ( int i = 0; i < temp.size(); ++i ) {
+//        std::cerr << temp[i] << std::endl;
+//    }
+
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
-=======
-    scene = new Scene(values /*source vector*/, predictor->getResultValues() /* result vector */ );
-
->>>>>>> 3520b1a8e25ac169eed3eb6226fd9a0a6f2129e7
     scene->show();
 }
 

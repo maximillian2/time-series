@@ -17,10 +17,6 @@ protected:
     vector<string> sourceKeys;
     vector<double> sourceValues;  // This vector is covered by series reader
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3520b1a8e25ac169eed3eb6226fd9a0a6f2129e7
     vector<string> resultKeys;
     vector<double> resultValues;  //  These vectors are filled only with predict() method.
 
