@@ -15,15 +15,15 @@ protected:
 	SeriesReader* reader;
 
 	vector<string> sourceKeys;	
-	vector<double> sourceValues;  // This map is covered by series reader
+    vector<double> sourceValues;  // This vector is covered by series reader
 
 	vector<string> predictedKeys;	
-	vector<double> predictedValues;  //  Prediction algorithms gonna fill this map;   
+    vector<double> predictedValues;  //  Prediction algorithms gonna fill this vector
 
 	int partsInSeason;   // Only for season variation
 
-	enum {WITH_SEASONAL_VARIATON, WITHOUT_SEASONAL_VARIATON} seriesType;
 public:	
+    enum {WITH_SEASONAL_VARIATON, WITHOUT_SEASONAL_VARIATON } seriesType;
 
 	void setPartsInSeason(int parts) {
 		if ( parts > 0 ) {
