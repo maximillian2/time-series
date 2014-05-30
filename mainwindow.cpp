@@ -7,19 +7,25 @@
 #include <QtDebug>
 #include <iostream>
 #include "bayesian.h"
+#include<iostream>
+#include "seriesReader.h"
+#include "seriesReader.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    //QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
-    predictor = new Bayesian();
+        SeriesReader* sr = new FileReader("test.txt");
+        predictor = new Bayesian(sr);
+
+//    predictor->predict(24);
 
     ui->tableView->horizontalHeader()->hide();
 
-//    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
@@ -55,9 +61,10 @@ void MainWindow::on_calculatePushButton_clicked()
     }
 
     predictor->predict(ui->partsSpinBox->text().toInt());
-//    scene = new Scene(values /*source vector*/, predictor->getResultValues() /* result vector */ );
 
-//    scene->show();
+    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
+
+    scene->show();
 }
 
 void MainWindow::exitApplication()
@@ -99,7 +106,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     {
     case 0:
         delete predictor;
-        predictor  = new Bayesian();
+//        predictor  = new Bayesian();
     break;
 
     case 1:

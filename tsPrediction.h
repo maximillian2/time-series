@@ -17,10 +17,6 @@ protected:
 	vector<string> sourceKeys;	
     vector<double> sourceValues;  // This vector is covered by series reader
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f1062c4840d1e989fce8cbdbdac5806d099d0a3c
     vector<string> resultKeys;
     vector<double> resultValues;  //  These vectors are filled only with predict() method.
 
@@ -29,22 +25,24 @@ protected:
 public:	
     enum {WITH_SEASONAL_VARIATON, WITHOUT_SEASONAL_VARIATON } seriesType;
 
+    vector<double> getSourceValues() { return sourceValues; }
+
     vector<string> getResultKeys()   { return resultKeys; }
     vector<double> getResultValues() { return resultValues; }
 
 
 	void setPartsInSeason(int parts) {
-		if ( parts > 0 ) {
-			partsInSeason = parts;
-		}
+//		if ( parts > 0 ) {
+//			partsInSeason = parts;
+//		}
 	}
 
     TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader), partsInSeason(12), seriesType(WITH_SEASONAL_VARIATON) {}
 
 	void setReader(SeriesReader* newReader) {
-		if ( newReader != NULL ) {
-			reader = newReader;
-		}
+//		if ( newReader != NULL ) {
+//			reader = newReader;
+//		}
 	}
 
 

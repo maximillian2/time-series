@@ -3,13 +3,14 @@
 
 #include "fileReader.h"
 #include "tsPrediction.h"
+#include "seriesReader.h"
 
 #include <new>
 
 class Bayesian : public TsPredictor {
 public:
 
-	Bayesian() : TsPredictor(new FileReader("test.txt")) {}
+    Bayesian(SeriesReader* sr) : TsPredictor(sr) {}
 
 
     //  Only filled  result vectors.
