@@ -12,8 +12,11 @@ Builder::Builder(map<string, double> tSeries, int view_height, int view_width, Q
     width = view_width;
     drawingScene = scene;
 
+    min_y = 0;
+    max_y = 0;
+
     //find interval dx
-    dx=width/(s_map.size()+2);
+    dx=width/(s_map.size()+1);
 
     //find interval dy
         //find maxi y
@@ -66,11 +69,11 @@ void Builder::drawSeries()
     i_next=s_map.begin();
     i_next++;
     int j = 0;
-    for(i; i!=s_map.end(); i++)
+    for(i_next; i_next!=s_map.end(); i_next++)
     {
         drawingScene->addLine(x0+dx*j,(*i).second/2, x0+dx*(j+1), (*i_next).second/2, QPen());
         j++;
-        i_next++;
+        i++;
     }
 }
 

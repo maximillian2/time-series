@@ -16,7 +16,7 @@ public:
     int height, width;
     int x0,y0;
     QGraphicsScene *drawingScene;
-    double dx,dy, max_y=0, min_y=0;
+    double dx,dy, max_y, min_y;
 
     void drawOsi();
     void drawSeries();
