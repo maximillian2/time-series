@@ -22,33 +22,13 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_9">
     <item>
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>Help text here</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>2</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Единица времени</string>
+           <string>Одиниця часу</string>
           </property>
          </widget>
         </item>
@@ -62,7 +42,7 @@
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
-           <string>Количество единиц</string>
+           <string>Кількість одиниць</string>
           </property>
          </widget>
         </item>
@@ -76,7 +56,7 @@
         <item>
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Величина за единицу времени</string>
+           <string>Величина за одиницю часу</string>
           </property>
          </widget>
         </item>
@@ -105,7 +85,7 @@
           <item>
            <widget class="QPushButton" name="fillPushButton">
             <property name="text">
-             <string>Заполнить</string>
+             <string>Заповнити</string>
             </property>
            </widget>
           </item>
@@ -162,7 +142,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Тип анализа</string>
+         <string>Тип аналізу</string>
         </property>
        </widget>
       </item>
@@ -170,22 +150,22 @@
        <widget class="QComboBox" name="comboBox">
         <item>
          <property name="text">
-          <string>Байесовкие сети</string>
+          <string>Баєсові мережі</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Нечеткие множества</string>
+          <string>Нечіткі множини</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Нейронные сети</string>
+          <string>Нейронні мережі</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Скрытые Марковские модели</string>
+          <string>Приховані марковські моделі</string>
          </property>
         </item>
        </widget>
@@ -212,7 +192,7 @@
         <item>
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Сезонность</string>
+           <string>Сезонність</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
@@ -220,14 +200,14 @@
              <item>
               <widget class="QRadioButton" name="onSeasonRadioButton">
                <property name="text">
-                <string>Включить</string>
+                <string>Включити</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QRadioButton" name="offSeasonRadioButton">
                <property name="text">
-                <string>Выключить</string>
+                <string>Виключити</string>
                </property>
               </widget>
              </item>
@@ -241,7 +221,7 @@
           <item>
            <widget class="QLabel" name="partsLabel">
             <property name="text">
-             <string>Количество  частей</string>
+             <string>Кількість частин</string>
             </property>
            </widget>
           </item>
@@ -257,7 +237,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>На сколько предугадывать</string>
+           <string>Період розрахунку</string>
           </property>
          </widget>
         </item>
@@ -277,12 +257,11 @@
        </size>
       </property>
       <property name="text">
-       <string>Расчитать</string>
+       <string>Розрахувати</string>
       </property>
      </widget>
     </item>
    </layout>
-   <zorder>label_6</zorder>
    <zorder>tableView</zorder>
    <zorder>label_5</zorder>
    <zorder>lineEdit</zorder>
@@ -304,7 +283,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Файл</string>
     </property>
     <addaction name="actionOpen_file"/>
     <addaction name="actionSave"/>
@@ -314,7 +293,7 @@
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
-     <string>Help</string>
+     <string>Поміч</string>
     </property>
     <addaction name="actionOnline_manual"/>
     <addaction name="actionOffline_Manual"/>
@@ -332,37 +311,37 @@
   </action>
   <action name="actionOnline_manual">
    <property name="text">
-    <string>Online Manual</string>
+    <string>Онлайн довідка</string>
    </property>
   </action>
   <action name="actionAbout_Series">
    <property name="text">
-    <string>About Series...</string>
+    <string>Про Series...</string>
    </property>
   </action>
   <action name="actionOffline_Manual">
    <property name="text">
-    <string>Offline Manual</string>
+    <string>Швидка поміч</string>
    </property>
   </action>
   <action name="actionOpen_file">
    <property name="text">
-    <string>Open file...</string>
+    <string>Відкрити файл...</string>
    </property>
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>Save</string>
+    <string>Зберегти</string>
    </property>
   </action>
   <action name="actionSave_as">
    <property name="text">
-    <string>Save as...</string>
+    <string>Зберегти як...</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>Вийти з програми</string>
    </property>
   </action>
  </widget>
