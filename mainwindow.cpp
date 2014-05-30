@@ -54,7 +54,7 @@ void MainWindow::on_calculatePushButton_clicked()
     }
 
     predictor->predict(ui->partsSpinBox->text().toInt());
-    scene = new Scene(values /*source vector*/, predictor->getResultValues() /* result vector */ );
+//    scene = new Scene(values /*source vector*/, predictor->getResultValues() /* result vector */ );
 
 //    scene->show();
 }
@@ -66,14 +66,18 @@ void MainWindow::exitApplication()
 
 void MainWindow::openFile()
 {
-//    delete fileReader;
-//    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
-//    fileReader = new FileReader(fileName.toStdString());
+    if ( !fileReader )
+    {
+        delete fileReader;
+    }
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+    fileReader = new FileReader(fileName.toStdString());
 }
 
 void MainWindow::saveFile()
 {
-
+    qDebug() << "Not available yet.";
 }
 
 void MainWindow::on_onSeasonRadioButton_clicked()
@@ -89,6 +93,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
+    qDebug() << index;
     switch(index)
     {
     case 0:
@@ -97,19 +102,20 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     break;
 
     case 1:
-        delete predictor;
-
+//        delete predictor;
+//        predictor = new FuzzySet();
     break;
 
     case 2:
-        delete predictor;
-
+//        delete predictor;
+//        predictor = new NeuralSet();
     break;
 
     case 3:
-        delete predictor;
+//        delete predictor;
+//        predictor = new MarkovModel();
 
-        break;
+    break;
 
 
     }

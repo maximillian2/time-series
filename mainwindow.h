@@ -45,7 +45,7 @@ private:
     Scene *scene;
     TsPredictor *predictor;
 //    QMap<std::string, double> localMap;
-//    FileReader *fileReader;
+    FileReader *fileReader;
 //    std::map<std::string, double> localMap;
 };
 
