@@ -5,30 +5,37 @@
 #include <math.h>
 #include <QDebug>
 
-Builder::Builder(map<string, double> tSeries, int view_height, int view_width, QGraphicsScene *scene)
+Builder::Builder(vector<double> sourceSeries, vector<double> predictSeries, int view_height, int view_width, QGraphicsScene *scene)
 {
-    s_map = tSeries;
+    srcSeries = sourceSeries;
+    predSeries = predictSeries;
+    allSeries = sourceSeries;
+    for(int i = 0; i < predictSeries.size(); i++)
+    {
+        allSeries.push_back(predictSeries[i]);
+    }
     height = view_height;
     width = view_width;
     drawingScene = scene;
+    size = sourceSeries.size()+predictSeries.size();
 
     min_y = 0;
     max_y = 0;
 
     //find interval dx
-    dx=width/(s_map.size()+1);
+    dx=width/(size+1);
 
     //find interval dy
         //find maxi y
-        for(map <string, double>::iterator it = s_map.begin(); it != s_map.end(); it++)
-            if(max_y < (*it).second)
-                max_y = (*it).second;
+        for(int i = 0; i < size; i++)
+            if(max_y < allSeries[i])
+                max_y = allSeries[i];
 
         //find min y
         min_y=max_y;
-        for(map <string, double>::iterator ii = s_map.begin(); ii != s_map.end(); ii++)
-            if(min_y > (*ii).second)
-                    min_y = (*ii).second;
+        for(int i = 0; i < size; i++)
+            if(min_y > allSeries[i])
+                min_y = allSeries[i];
 
         //find dy
         dy = (height/(max_y-min_y+2));
@@ -52,8 +59,9 @@ void Builder::drawOsi()
     drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
 
     //notches
-    for(int i = 0; i < s_map.size(); i++)
+    for(int i = 0; i < size; i++)
         drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
+
     if(dy<10) dy *= 10;
     for(int i = 0; height-height/20-dy*(i+1) > 0+height/15+2*dy; i++)
         drawingScene->addLine(7,height-height/20-dy*(i+1),13,height-height/20-dy*(i+1),QPen());
@@ -63,15 +71,10 @@ void Builder::drawOsi()
 
 void Builder::drawSeries()
 {
-    map <string, double>::iterator i;
-    map <string, double>::iterator i_next;
-    i=s_map.begin();
-    i_next=s_map.begin();
-    i_next++;
-    int j = 0;
-    for(i_next; i_next!=s_map.end(); i_next++)
+    int j = 0, i = 0, i_next = 1;
+    for(i_next; i_next < size; i_next++)
     {
-        drawingScene->addLine(x0+dx*j,(*i).second/2, x0+dx*(j+1), (*i_next).second/2, QPen());
+        drawingScene->addLine(x0+dx*j,allSeries[i]/2, x0+dx*(j+1), allSeries[i_next]/2, QPen());
         j++;
         i++;
     }
