@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->tableView->horizontalHeader()->hide();
     ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 
-    connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication());
+    connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(activated()), this, SLOT(saveFile()));
 }
