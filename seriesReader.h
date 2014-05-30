@@ -2,7 +2,7 @@
 #define SERIES_READER
 
 #include <string>
-#include <map>
+#include <vector>
 
 // базовый класс с интрефейсом для заполнения временного ряда
 
@@ -10,10 +10,13 @@ using namespace std;
 
 class SeriesReader {
 protected:
-	map<string, string> tSeries;
+	vector<string> keys;	
+	vector<double> values;
 
 public:
-	virtual map<string, string> getSeries() { return tSeries; }
+	vector<string> getKeys() { return keys; }
+	vector<double> getValues() { return values; }
+
 };
 
 #endif
