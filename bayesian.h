@@ -11,6 +11,8 @@ public:
 
 	Bayesian() : TsPredictor(new FileReader("test.txt")) {}
 
+
+    //  Only filled  result vectors.
 	void predict(int times) {
 
 		sourceKeys   = reader->getKeys();
@@ -50,16 +52,16 @@ public:
 					value += (1.0/3.0)*(sourceValues[sourceValues.size()-1] - sourceValues[sourceValues.size()-2]);
 				
 					sourceValues.push_back(value);
-					predictedValues.push_back(value);
+                    resultValues.push_back(value);
 
 					int lastSource = sourceValues.size()-1;
 
 					movingAverageValues.push_back((sourceValues[lastSource]+sourceValues[lastSource-1]+sourceValues[lastSource-2]) / 3.0);
 				}
 
-				for (int i = 0; i < predictedValues.size() ; ++i)
+                for (int i = 0; i < resultValues.size() ; ++i)
 				{
-					std::cout << predictedValues[i] << std::endl;
+                    std::cout << resultValues[i] << std::endl;
 				}
 
 			break;
@@ -149,19 +151,19 @@ public:
 
 				
 				for (int i = sourceValues.size(); i < sourceValues.size() + times; i++) {
-					predictedKeys  .push_back(sourceKeys[i%sourceValues.size()]);
-					predictedValues.push_back((a*i+b)*partIndexes[i%partsInSeason]); 
+                    resultKeys  .push_back(sourceKeys[i%sourceValues.size()]);
+                    resultValues.push_back((a*i+b)*partIndexes[i%partsInSeason]);
 				}
 
 				double sum = 0;
 				int counter = 0;
 
-				for (int i = 0; i < predictedKeys.size(); ++i)
+                for (int i = 0; i < resultKeys.size(); ++i)
 				{
-					std::cout << predictedKeys[i] << "  " << predictedValues[i] << std::endl;
+                    std::cout << resultKeys[i] << "  " << resultValues[i] << std::endl;
 
 					counter++;
-					sum += predictedValues[i];
+                    sum += resultValues[i];
 					
 					if (counter == partsInSeason) {
 						std::cout << "\nTotal : " << sum <<"\n\n";

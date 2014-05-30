@@ -22,9 +22,9 @@ private:
 public:
 	FileReader(string fName) : source(fName.c_str()) {
 		
-		if ( !source ) {
-			throw FileNotFound();
-		}
+//		if ( !source ) {
+//            throw FileNotFound();
+//		}
 
 		/* File format : 
 		1990 - 10, 1991 - 11, 1992 - 12,...

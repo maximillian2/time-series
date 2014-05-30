@@ -1,5 +1,5 @@
 #ifndef CONSOLE_READER
-#define CONSOLE_READER 
+#define CONSOLE_READER
 
 #include "seriesReader.h"
 
@@ -8,27 +8,27 @@
 // наследник seriesReader, отвечает за считывания файла с консоли
 
 
-class ConsoleReader : SeriesReader {
+class ConsoleReader : public SeriesReader {
 
 public:
-	ConsoleReader() {
+    ConsoleReader() {
 
-		/* Input format : 
-		1990 - 10, 1991 - 11, 1992 - 12,...
-		To terminate - type '.' 
-		*/
+        /* Input format :
+        1990 - 10, 1991 - 11, 1992 - 12,...
+        To terminate - type '.'
+        */
 
-		char delim;  // delimiter
+        char delim;  // delimiter
 
-		while ( delim != '.' ) {
-			string K, V;
+        while ( delim != '.' ) {
+            string K, V;
 
-			cin >> K >> delim >> V;
-			tSeries[K] = V;
+            cin >> K >> delim >> V;
+            tSeries[K] = V;
 
-			cin >> delim;
-		}
-	}
+            cin >> delim;
+        }
+    }
 };
 
 #endif  // CONSOLE_READER
