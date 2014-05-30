@@ -4,3 +4,6 @@
 
 ## 
 *.o
+ui_*.h
+Makefile
+qrc_*.*

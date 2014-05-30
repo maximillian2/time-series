@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <map>
+#include <QMap>
 #include "scene.h"
 
 namespace Ui {
@@ -28,6 +30,8 @@ private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
     Scene *scene;
+    QMap<std::string, double> localMap;
+//    std::map<std::string, double> localMap;
 };
 
 #endif // MAINWINDOW_H

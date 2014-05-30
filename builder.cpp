@@ -12,6 +12,9 @@ Builder::Builder(map<string, double> tSeries, int view_height, int view_width, Q
     width = view_width;
     drawingScene = scene;
 
+    min_y = 0;
+    max_y = 0;
+
     //find interval dx
     dx=width/(s_map.size()+1);
 

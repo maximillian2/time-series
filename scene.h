@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
-#include <map>
-#include <string>
+//#include <map>
+//#include <string>
 using namespace std;
 
 namespace Ui {
@@ -17,6 +17,8 @@ class Scene : public QMainWindow
 
 public:
     explicit Scene(QWidget *parent = 0);
+    // make such constructor
+    // Scene(QMap inputMap);
     ~Scene();
 
 private slots:
