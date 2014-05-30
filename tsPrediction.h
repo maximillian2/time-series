@@ -14,13 +14,10 @@ class TsPredictor {
 protected:
 	SeriesReader* reader;
 
-	vector<string> sourceKeys;	
+    vector<string> sourceKeys;
     vector<double> sourceValues;  // This vector is covered by series reader
 
-<<<<<<< HEAD
-=======
 
->>>>>>> f1062c4840d1e989fce8cbdbdac5806d099d0a3c
     vector<string> resultKeys;
     vector<double> resultValues;  //  These vectors are filled only with predict() method.
 
