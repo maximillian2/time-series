@@ -9,20 +9,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
 
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    //QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
     ui->tableView->horizontalHeader()->hide();
-<<<<<<< HEAD
     //ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
-=======
-    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    //ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(activated()), this, SLOT(saveFile()));
->>>>>>> 4936ba784bdf4270460e72b5d17644b151e3c628
 }
 
 MainWindow::~MainWindow()

@@ -10,9 +10,11 @@ using namespace std;
 class Builder
 {
 public:
-    Builder(map<string, double> tSeries, int view_height, int view_width, QGraphicsScene *scene);
+    Builder(vector<double> series, int view_height, int view_width, QGraphicsScene *scene);
 
-    map <string,double> s_map;
+    vector<double>srcSeries;
+    vector<double>predSeries;
+    vector<double>allSeries;
     int height, width;
     int x0,y0;
     QGraphicsScene *drawingScene;
