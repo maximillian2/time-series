@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
-//#include <map>
-//#include <string>
+#include <vector>
+
 using namespace std;
 
 namespace Ui {
@@ -16,9 +16,7 @@ class Scene : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Scene(QWidget *parent = 0);
-    // make such constructor
-    // Scene(QMap inputMap);
+    Scene(vector <double> source, vector <double> predict,QWidget *parent = 0);
     ~Scene();
 
 private slots:
@@ -27,7 +25,8 @@ private slots:
 private:
     Ui::Scene *ui;
     QGraphicsScene *scene;
-
+    vector <double> sourceSeries;
+    vector <double> predictSeries;
 };
 
 #endif // SCENE_H

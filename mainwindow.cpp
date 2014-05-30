@@ -12,12 +12,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
 
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    //QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
     predictor = new Bayesian();
 
     ui->tableView->horizontalHeader()->hide();
+
 //    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));

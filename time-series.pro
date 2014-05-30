@@ -32,3 +32,5 @@ RESOURCES += \
     images.qrc
 
 CONFIG += c++11
+
+OTHER_FILES +=
