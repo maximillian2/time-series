@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Scene::Scene(QWidget *parent, vector <double> source, vector <double> predict) :
+Scene::Scene(vector <double> source, vector <double> predict, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Scene)
 {

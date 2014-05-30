@@ -11,11 +11,8 @@
 
 
 
-<<<<<<< HEAD
+
  #include <QApplication>
-=======
- #include <QtGui/QApplication>
->>>>>>> 1e33b15bd1660d8135731b58fdb0cf447ccfdf51
  #include "mainwindow.h"
 
  int main(int argc, char *argv[])

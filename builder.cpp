@@ -9,7 +9,11 @@ Builder::Builder(vector<double> sourceSeries, vector<double> predictSeries, int 
 {
     srcSeries = sourceSeries;
     predSeries = predictSeries;
-    allSeries = sourceSeries+predictSeries;
+    allSeries = sourceSeries;
+    for(int i = 0; i < predictSeries.size(); i++)
+    {
+        allSeries.push_back(predictSeries[i]);
+    }
     height = view_height;
     width = view_width;
     drawingScene = scene;
@@ -55,7 +59,7 @@ void Builder::drawOsi()
     drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
 
     //notches
-    for(int i = 0; i < s_map.size(); i++)
+    for(int i = 0; i < size; i++)
         drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
 
     if(dy<10) dy *= 10;

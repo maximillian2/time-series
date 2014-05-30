@@ -18,12 +18,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     predictor = new Bayesian();
 
     ui->tableView->horizontalHeader()->hide();
-<<<<<<< HEAD
-    //ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
-    //ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
-=======
+
 //    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
->>>>>>> 1e33b15bd1660d8135731b58fdb0cf447ccfdf51
 
     connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
