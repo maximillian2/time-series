@@ -58,7 +58,7 @@ void Builder::drawOsi()
     for(int i = 0; height-height/20-dy*(i+1) > 0+height/15+2*dy; i++)
         drawingScene->addLine(7,height-height/20-dy*(i+1),13,height-height/20-dy*(i+1),QPen());
 
-    QGraphicsTextItem *text = drawingScene->addText("© G.D. aka Morphei, 2014",QFont());
+    QGraphicsTextItem *text = drawingScene->addText("(c) G.D. aka Morphei, 2014",QFont());
 }
 
 void Builder::drawSeries()
