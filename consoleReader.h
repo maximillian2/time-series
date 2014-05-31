@@ -5,9 +5,6 @@
 
 #include <iostream>
 
-// наследник seriesReader, отвечает за считывания файла с консоли
-
-
 class ConsoleReader : public SeriesReader {
 
 public:

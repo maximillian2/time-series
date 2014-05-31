@@ -6,9 +6,6 @@
 #include <fstream>
 #include <iostream>
 
-
-// для файла
-
 using namespace std;
 
 //Exception throws if file name is invalid

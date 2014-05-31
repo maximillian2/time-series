@@ -14,7 +14,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     scene.cpp \
-    builder.cpp
+    builder.cpp \
+    markovmodel.cpp
 
 HEADERS  += mainwindow.h \
     tsPrediction.h \
@@ -23,7 +24,8 @@ HEADERS  += mainwindow.h \
     consoleReader.h \
     scene.h \
     builder.h \
-    bayesian.h
+    bayesian.h \
+    markovmodel.h
 
 FORMS    += mainwindow.ui \
     scene.ui

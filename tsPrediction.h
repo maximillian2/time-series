@@ -8,7 +8,6 @@
 
 using std::string;
 using std::vector;
-// базовый класс для  предугадывания
 
 class TsPredictor {
 protected:

@@ -13,10 +13,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
-//    SeriesReader* sr = new FileReader("test.txt");
+    SeriesReader* sr = new FileReader("test.txt");
 
     // default predictor type
-//    predictor = new Bayesian(sr);
+    predictor = new Bayesian(sr);
 
     ui->tableView->horizontalHeader()->hide();
 
@@ -59,7 +59,7 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-//    predictor->predict(24);//ui->partsSpinBox->text().toInt());
+    predictor->predict(ui->partsSpinBox->text().toInt());
 
 //    vector<double> temp = predictor->getResultValues();
 
@@ -75,9 +75,9 @@ void MainWindow::on_calculatePushButton_clicked()
 //    }
 
 
-//    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
+    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
-//    scene->show();
+    scene->show();
 }
 
 void MainWindow::exitApplication()
@@ -87,11 +87,11 @@ void MainWindow::exitApplication()
 
 void MainWindow::openFile()
 {
-//    if ( !fileReader )
-//        delete fileReader;
+    if ( !fileReader )
+        delete fileReader;
 
-//    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
-//    fileReader = new FileReader(fileName.toStdString());
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+    fileReader = new FileReader(fileName.toStdString());
 }
 
 void MainWindow::saveFile()
@@ -101,7 +101,7 @@ void MainWindow::saveFile()
 
 void MainWindow::on_onSeasonRadioButton_clicked()
 {
-//    predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
+    predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
     ui->partsLabel->show();
@@ -110,7 +110,7 @@ void MainWindow::on_onSeasonRadioButton_clicked()
 
 void MainWindow::on_offSeasonRadioButton_clicked()
 {
-//    predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
+    predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
     ui->partsLabel->hide();
     ui->partsSpinBox->hide();
