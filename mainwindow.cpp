@@ -13,22 +13,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
+
     SeriesReader* sr = new FileReader("test.txt");
 
     // default predictor type
     predictor = new Bayesian(sr);
 
     ui->tableView->horizontalHeader()->hide();
-
     ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
-
-    ui->offSeasonRadioButton->setChecked(true);
-    ui->partsLabel->hide();
-    ui->partsSpinBox->hide();
 }
 
 MainWindow::~MainWindow()
@@ -59,7 +55,7 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(24/*ui->partsSpinBox->text().toInt()*/);
+    predictor->predict(ui->partsSpinBox->text().toInt());
 
 //    vector<double> temp = predictor->getResultValues();
 
@@ -104,16 +100,16 @@ void MainWindow::on_onSeasonRadioButton_clicked()
     predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
-    ui->partsLabel->show();
-    ui->partsSpinBox->show();
+    ui->partsLabel->setEnabled(true);
+    ui->partsSpinBox->setEnabled(true);
 }
 
 void MainWindow::on_offSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
-    ui->partsLabel->hide();
-    ui->partsSpinBox->hide();
+    ui->partsLabel->setEnabled(false);
+    ui->partsSpinBox->setEnabled(false);
 }
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)

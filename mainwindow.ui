@@ -209,6 +209,9 @@
                <property name="text">
                 <string>Виключити</string>
                </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -220,13 +223,20 @@
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QLabel" name="partsLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>Кількість частин</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="partsSpinBox"/>
+           <widget class="QSpinBox" name="partsSpinBox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -263,13 +273,7 @@
     </item>
    </layout>
    <zorder>tableView</zorder>
-   <zorder>label_5</zorder>
-   <zorder>lineEdit</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
    <zorder>calculatePushButton</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>label_2</zorder>
    <zorder></zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
