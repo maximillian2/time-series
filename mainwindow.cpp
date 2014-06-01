@@ -20,11 +20,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->tableView->horizontalHeader()->hide();
 
-    ui->tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    connect(ui->actionExit, SIGNAL(activated()), this, SLOT(exitApplication()));
-    connect(ui->actionOpen_file, SIGNAL(activated()), this, SLOT(openFile()));
-    connect(ui->actionSave, SIGNAL(activated()), this, SLOT(saveFile()));
+    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
 
     ui->offSeasonRadioButton->setChecked(true);
     ui->partsLabel->hide();
@@ -59,7 +59,7 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(ui->partsSpinBox->text().toInt());
+    predictor->predict(24/*ui->partsSpinBox->text().toInt()*/);
 
 //    vector<double> temp = predictor->getResultValues();
 
