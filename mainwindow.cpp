@@ -15,8 +15,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
+<<<<<<< HEAD
     // default predictor type
     // predictor = new Bayesian(sr);
+=======
+//    SeriesReader* sr = new FileReader("test.txt");
+
+    // default predictor type
+
+
+>>>>>>> 0308e0880aa90e7bb8c724cf4afe86f66a043c74
 
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -47,13 +55,13 @@ void MainWindow::on_fillPushButton_clicked()
 }
 
 void MainWindow::on_calculatePushButton_clicked()
-{/*
+{
     for(int i = 0; i < model->columnCount(); i++)
     {
         keys.push_back(model->item(0, i)->text().toStdString());
         values.push_back(model->item(1, i)->text().toDouble());
     }
-    */
+
 
     predictor->predict(ui->spinBox_2->text().toInt());
 
@@ -107,7 +115,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    qDebug() << index;
+    qDebug() << index << "  " << fileReader;
     switch(index)
     {
     case 0:
