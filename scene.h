@@ -17,16 +17,19 @@ class Scene : public QMainWindow
 
 public:
     Scene(vector <double> source, vector <double> predict,QWidget *parent = 0);
+    Scene(vector <double> source, vector <double> predict, vector<double> future, QWidget *parent = 0);
     ~Scene();
 
 private slots:
     void on_pushButton_clicked();
 
 private:
+    int index = 0;
     Ui::Scene *ui;
     QGraphicsScene *scene;
     vector <double> sourceSeries;
     vector <double> predictSeries;
+    vector <double> futureSeries;
 };
 
 #endif // SCENE_H
