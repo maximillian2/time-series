@@ -7,6 +7,7 @@
 #include <QtDebug>
 #include <QFileDialog>
 #include <QtDebug>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // default predictor type
     // predictor = new Bayesian(sr);
+
 
 
     ui->tableView->horizontalHeader()->hide();
@@ -47,14 +49,15 @@ void MainWindow::on_fillPushButton_clicked()
 }
 
 void MainWindow::on_calculatePushButton_clicked()
-{
+{/*
     for(int i = 0; i < model->columnCount(); i++)
     {
         keys.push_back(model->item(0, i)->text().toStdString());
         values.push_back(model->item(1, i)->text().toDouble());
     }
+    */
 
-    predictor->predict(ui->partsSpinBox->text().toInt());
+    predictor->predict(ui->spinBox_2->text().toInt());
 
 //    vector<double> temp = predictor->getResultValues();
 
@@ -62,7 +65,7 @@ void MainWindow::on_calculatePushButton_clicked()
 //        std::cerr << temp[i] << std::endl;
 //    }
 
-//    temp = predictor->getSourceValues();
+//    temp = predictor->getResultValues();
 //    std::cerr << "Sources" << std::endl;
 
 //    for ( int i = 0; i < temp.size(); ++i ) {
@@ -70,7 +73,6 @@ void MainWindow::on_calculatePushButton_clicked()
 //    }
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
-
     scene->show();
 }
 
@@ -100,7 +102,7 @@ void MainWindow::on_onSeasonRadioButton_clicked()
     predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
-    ui->partsLabel->setEnabled(true);
+//    ui->partsLabel->setEnabled(true);
     ui->partsSpinBox->setEnabled(true);
 }
 
@@ -108,7 +110,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
-    ui->partsLabel->setEnabled(false);
+//    ui->partsLabel->setEnabled(false);
     ui->partsSpinBox->setEnabled(false);
 }
 
@@ -118,8 +120,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     switch(index)
     {
     case 0:
-        delete predictor;
-        predictor  = new Bayesian(fileReader);
+//        delete predictor;
+//        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
