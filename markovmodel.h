@@ -1,5 +1,5 @@
-//#ifndef MARKOVMODEL_H
-//#define MARKOVMODEL_H
+#ifndef MARKOVMODEL_H
+#define MARKOVMODEL_H
 
 #include "seriesReader.h"
 #include "tsPrediction.h"
