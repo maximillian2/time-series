@@ -15,10 +15,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
-    SeriesReader* sr = new FileReader("test.txt");
+//    SeriesReader* sr = new FileReader("test.txt");
 
     // default predictor type
-    predictor = new Bayesian(sr);
+
 
 
     ui->tableView->horizontalHeader()->hide();
@@ -50,13 +50,13 @@ void MainWindow::on_fillPushButton_clicked()
 }
 
 void MainWindow::on_calculatePushButton_clicked()
-{/*
+{
     for(int i = 0; i < model->columnCount(); i++)
     {
         keys.push_back(model->item(0, i)->text().toStdString());
         values.push_back(model->item(1, i)->text().toDouble());
     }
-    */
+
 
     predictor->predict(ui->spinBox_2->text().toInt());
 
@@ -89,6 +89,7 @@ void MainWindow::openFile()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     fileReader = new FileReader(fileName.toStdString());
+    predictor = new Bayesian(fileReader);
 }
 
 void MainWindow::saveFile()
@@ -115,12 +116,12 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    qDebug() << index;
+    qDebug() << index << "  " << fileReader;
     switch(index)
     {
     case 0:
 //        delete predictor;
-//        predictor  = new Bayesian(fileReader);
+        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
