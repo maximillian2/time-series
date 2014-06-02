@@ -69,8 +69,11 @@ void MainWindow::on_calculatePushButton_clicked()
 //    for ( int i = 0; i < temp.size(); ++i ) {
 //        std::cerr << temp[i] << std::endl;
 //    }
-
-    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
+    vector<double> x = {543,323,432,543,323,453,435,234,542};
+    vector<double> y = {654,345,345,324,564,495};
+    vector<double> z = {654,345,340,320,494,490};
+    //scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
+    scene = new Scene(x,y);
     scene->show();
 }
 
