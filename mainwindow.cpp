@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "scene.h"
 #include "bayesian.h"
+#include "markovmodel.h"
 #include "seriesReader.h"
 
 #include <QtDebug>
@@ -12,11 +13,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
-
-    // default predictor type
-//    SeriesReader *sr = new FileReader("text.txt");
 
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -56,19 +53,6 @@ void MainWindow::on_calculatePushButton_clicked()
     */
 
     predictor->predict(ui->spinBox_2->text().toInt());
-
-//    vector<double> temp = predictor->getResultValues();
-
-//    for ( int i = 0; i < temp.size(); ++i ) {
-//        std::cerr << temp[i] << std::endl;
-//    }
-
-//    temp = predictor->getResultValues();
-//    std::cerr << "Sources" << std::endl;
-
-//    for ( int i = 0; i < temp.size(); ++i ) {
-//        std::cerr << temp[i] << std::endl;
-//    }
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
     scene->show();
@@ -133,8 +117,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     break;
 
     case 3:
-//        delete predictor;
-//        predictor = new MarkovModel();
+        delete predictor;
+        predictor = new MarkovModel(fileReader);
     break;
     }
 }

@@ -1,10 +1,14 @@
 #ifndef MARKOVMODEL_H
 #define MARKOVMODEL_H
 
-class MarkovModel
+#include "seriesReader.h"
+#include "tsPrediction.h"
+
+class MarkovModel : public TsPredictor
 {
 public:
-    MarkovModel();
+    MarkovModel(SeriesReader *sr) : TsPredictor(sr) {}
+    void predict(int times);
 };
 
 #endif // MARKOVMODEL_H
