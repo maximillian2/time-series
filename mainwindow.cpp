@@ -15,17 +15,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
-<<<<<<< HEAD
-    // default predictor type
-    // predictor = new Bayesian(sr);
-=======
-//    SeriesReader* sr = new FileReader("test.txt");
-
-    // default predictor type
-
-
->>>>>>> 0308e0880aa90e7bb8c724cf4afe86f66a043c74
-
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
