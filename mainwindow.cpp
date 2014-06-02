@@ -73,9 +73,7 @@ void MainWindow::on_calculatePushButton_clicked()
 //        std::cerr << temp[i] << std::endl;
 //    }
 
-
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
-
     scene->show();
 }
 

@@ -89,8 +89,10 @@ void Builder::drawSeries()
         j++;
         qDebug() << "src - " << srcSeries[i];
     }
+    drawingScene->addLine(x0 + dx*j, y0 - srcSeries[i]*dy, x0 + dx*(j+1), y0 - predSeries[0]*dy, QPen());
     i = 0;
     i_next = 1;
+    j++;
     for(i_next; i_next < predSeries.size(); i_next++)
     {
         drawingScene->addLine(x0 + dx*j, y0 - predSeries[i]*dy, x0 + dx*(j+1), y0 - predSeries[i_next]*dy, QPen(Qt::DashLine));
