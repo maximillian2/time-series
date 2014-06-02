@@ -17,8 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // default predictor type
     // predictor = new Bayesian(sr);
 
+
     ui->tableView->horizontalHeader()->hide();
-    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+//    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
@@ -84,6 +85,7 @@ void MainWindow::openFile()
         delete fileReader;
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+    qDebug() << fileName;
     fileReader = new FileReader(fileName.toStdString());
 //    SeriesReader* sr = new FileReader("test.txt");
 }
