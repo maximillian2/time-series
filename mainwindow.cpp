@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "scene.h"
 #include "bayesian.h"
+#include "markovmodel.h"
 #include "seriesReader.h"
 
 #include <QtDebug>
@@ -12,7 +13,6 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
     ui->tableView->horizontalHeader()->hide();
@@ -50,7 +50,6 @@ void MainWindow::on_calculatePushButton_clicked()
         keys.push_back(model->item(0, i)->text().toStdString());
         values.push_back(model->item(1, i)->text().toDouble());
     }
-
 
     predictor->predict(ui->spinBox_2->text().toInt());
 
@@ -90,7 +89,7 @@ void MainWindow::on_onSeasonRadioButton_clicked()
     predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
-//    ui->partsLabel->setEnabled(true);
+    ui->partsLabel->setEnabled(true);
     ui->partsSpinBox->setEnabled(true);
 }
 
@@ -98,7 +97,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
-//    ui->partsLabel->setEnabled(false);
+    ui->partsLabel->setEnabled(false);
     ui->partsSpinBox->setEnabled(false);
 }
 
@@ -123,8 +122,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     break;
 
     case 3:
-//        delete predictor;
-//        predictor = new MarkovModel();
+        delete predictor;
+        predictor = new MarkovModel(fileReader);
     break;
     }
 }
