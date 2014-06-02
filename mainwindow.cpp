@@ -16,9 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
     // default predictor type
-    // predictor = new Bayesian(sr);
-
-
+//    SeriesReader *sr = new FileReader("text.txt");
 
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -89,7 +87,7 @@ void MainWindow::openFile()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     qDebug() << fileName;
     fileReader = new FileReader(fileName.toStdString());
-//    SeriesReader* sr = new FileReader("test.txt");
+    predictor = new Bayesian(fileReader);
 }
 
 void MainWindow::saveFile()
@@ -102,7 +100,7 @@ void MainWindow::on_onSeasonRadioButton_clicked()
     predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
-//    ui->partsLabel->setEnabled(true);
+    ui->partsLabel->setEnabled(true);
     ui->partsSpinBox->setEnabled(true);
 }
 
@@ -110,7 +108,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
-//    ui->partsLabel->setEnabled(false);
+    ui->partsLabel->setEnabled(false);
     ui->partsSpinBox->setEnabled(false);
 }
 
@@ -120,8 +118,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     switch(index)
     {
     case 0:
-//        delete predictor;
-//        predictor  = new Bayesian(fileReader);
+        delete predictor;
+        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
