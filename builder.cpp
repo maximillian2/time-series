@@ -17,7 +17,7 @@ Builder::Builder(vector<double> sourceSeries, vector<double> predictSeries, int 
     height = view_height;
     width = view_width;
     drawingScene = scene;
-    size = sourceSeries.size()+predictSeries.size();
+    size = sourceSeries.size()+predictSeries.size()-1;
 
     min_y = 0;
     max_y = 0;
@@ -38,20 +38,21 @@ Builder::Builder(vector<double> sourceSeries, vector<double> predictSeries, int 
                 min_y = allSeries[i];
 
         //find dy
-        dy = (height/(max_y-min_y+2));
+        dy = (height-height/20)/(max_y+2);
 
     //find centrum
     x0=10;
-    y0=height;//-height/20;
+
 
     //find step
-    if(max_y > 1000)
-        step = dy*125;
-    else if(max_y > 100)
-        step = dy*12;
-    else if (max_y > 10)
+    if(max_y > 100 && max_y < 1000)
+        step = dy*10;
+    else if(max_y > 1 && max_y < 100)
         step = dy;
-     qDebug() << step;
+    else if (max_y < 1)
+        step = dy/10;
+
+      y0=height-height/20;
 }
 
 void Builder::drawOsi()
@@ -68,11 +69,10 @@ void Builder::drawOsi()
     drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
 
     //notches
+    for(int i = 1; i < size-2; i++)
+        drawingScene->addLine(10+dx*(i),height-height/17,10+dx*(i),height-height/24);//x notches
 
-    for(int i = 0; i < size-1; i++)
-        drawingScene->addLine(10+dx*(i+1),height-height/17,10+dx*(i+1),height-height/24);//x notches
-
-    for(int i = y0-y0/15; i > 0+height/15+step*2; i= i-step)
+    for(int i = y0-step; i > 0+height/15+step; i= i-step)
         drawingScene->addLine(7,i,13,i,QPen());//y notches
 
     QGraphicsTextItem *text = drawingScene->addText("(c) G.D. aka Morphei, 2014",QFont());
@@ -84,9 +84,9 @@ void Builder::drawSeries()
     int j = 0, i = 0, i_next = 1;
     for(i_next; i_next < size; i_next++)
     {
-        drawingScene->addLine(x0+dx*j,allSeries[i]/step, x0+dx*(j+1), allSeries[i_next]/step, QPen());
-        j++;
+        drawingScene->addLine(x0 + dx*j, y0 - allSeries[i]*dy, x0 + dx*(j+1), y0 - allSeries[i_next]*dy, QPen());
         i++;
+        j++;
     }
 }
 
