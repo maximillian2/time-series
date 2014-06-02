@@ -14,10 +14,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
-    SeriesReader* sr = new FileReader("test.txt");
-
     // default predictor type
-    predictor = new Bayesian(sr);
+    // predictor = new Bayesian(sr);
 
     ui->tableView->horizontalHeader()->hide();
     ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -70,7 +68,6 @@ void MainWindow::on_calculatePushButton_clicked()
 //        std::cerr << temp[i] << std::endl;
 //    }
 
-
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
     scene->show();
@@ -88,6 +85,7 @@ void MainWindow::openFile()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     fileReader = new FileReader(fileName.toStdString());
+//    SeriesReader* sr = new FileReader("test.txt");
 }
 
 void MainWindow::saveFile()
@@ -118,8 +116,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     switch(index)
     {
     case 0:
-//        delete predictor;
-//        predictor  = new Bayesian();
+        delete predictor;
+        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
@@ -135,7 +133,6 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     case 3:
 //        delete predictor;
 //        predictor = new MarkovModel();
-
     break;
     }
 }

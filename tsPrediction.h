@@ -22,6 +22,8 @@ protected:
 	int partsInSeason;   // Only for season variation
 
 public:	
+    TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader), partsInSeason(12), seriesType(WITH_SEASONAL_VARIATON) {}
+
     enum {WITH_SEASONAL_VARIATON, WITHOUT_SEASONAL_VARIATON } seriesType;
 
     vector<double> getSourceValues() { return sourceValues; }
@@ -29,14 +31,12 @@ public:
     vector<string> getResultKeys()   { return resultKeys; }
     vector<double> getResultValues() { return resultValues; }
 
-
     void setPartsInSeason(int parts) {
 //		if ( parts > 0 ) {
 //			partsInSeason = parts;
 //		}
     }
 
-    TsPredictor(SeriesReader* s_reader = 0) : reader(s_reader), partsInSeason(12), seriesType(WITH_SEASONAL_VARIATON) {}
 
     void setReader(SeriesReader* newReader) {
 //		if ( newReader != NULL ) {

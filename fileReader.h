@@ -11,7 +11,6 @@ using namespace std;
 //Exception throws if file name is invalid
 class FileNotFound {};
 
-
 class FileReader : public SeriesReader {
 private:
 	ifstream source;
