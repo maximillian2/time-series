@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "scene.h"
 #include "bayesian.h"
+#include "markovmodel.h"
 #include "seriesReader.h"
 
 #include <QtDebug>
@@ -12,14 +13,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
-
-    SeriesReader* sr = new FileReader("test.txt");
-
-    // default predictor type
-    predictor = new Bayesian(sr);
-
 
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -50,33 +44,22 @@ void MainWindow::on_fillPushButton_clicked()
 }
 
 void MainWindow::on_calculatePushButton_clicked()
-{/*
+{
     for(int i = 0; i < model->columnCount(); i++)
     {
         keys.push_back(model->item(0, i)->text().toStdString());
         values.push_back(model->item(1, i)->text().toDouble());
     }
-    */
 
     predictor->predict(ui->spinBox_2->text().toInt());
 
-//    vector<double> temp = predictor->getResultValues();
+//    vector<double> x = {543,323,432,543,323,453,435,234,542};
+//    vector<double> y = {654,345,345,324,564,495};
+//    vector<double> z = {654,345,340,320,494,490};
 
-//    for ( int i = 0; i < temp.size(); ++i ) {
-//        std::cerr << temp[i] << std::endl;
-//    }
+    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
-//    temp = predictor->getResultValues();
-//    std::cerr << "Sources" << std::endl;
-
-//    for ( int i = 0; i < temp.size(); ++i ) {
-//        std::cerr << temp[i] << std::endl;
-//    }
-    vector<double> x = {543,323,432,543,323,453,435,234,542};
-    vector<double> y = {654,345,345,324,564,495};
-    vector<double> z = {654,345,340,320,494,490};
-    //scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
-    scene = new Scene(x,y,z);
+//    scene = new Scene(x,y,z);
     scene->show();
 }
 
@@ -91,7 +74,9 @@ void MainWindow::openFile()
         delete fileReader;
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+    qDebug() << fileName;
     fileReader = new FileReader(fileName.toStdString());
+    predictor = new Bayesian(fileReader);
 }
 
 void MainWindow::saveFile()
@@ -104,7 +89,7 @@ void MainWindow::on_onSeasonRadioButton_clicked()
     predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
     predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
-//    ui->partsLabel->setEnabled(true);
+    ui->partsLabel->setEnabled(true);
     ui->partsSpinBox->setEnabled(true);
 }
 
@@ -112,18 +97,18 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 {
     predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
 
-//    ui->partsLabel->setEnabled(false);
+    ui->partsLabel->setEnabled(false);
     ui->partsSpinBox->setEnabled(false);
 }
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    qDebug() << index;
+    qDebug() << index << "  " << fileReader;
     switch(index)
     {
     case 0:
-//        delete predictor;
-//        predictor  = new Bayesian(fileReader);
+        delete predictor;
+        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
@@ -137,9 +122,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     break;
 
     case 3:
-//        delete predictor;
-//        predictor = new MarkovModel();
-
+        delete predictor;
+        predictor = new MarkovModel(fileReader);
     break;
     }
 }

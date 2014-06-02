@@ -39,7 +39,7 @@ private:
     QStandardItemModel *model;
     Scene *scene;
     TsPredictor *predictor;
-    FileReader *fileReader;
+    SeriesReader *fileReader;
 };
 
 #endif // MAINWINDOW_H
