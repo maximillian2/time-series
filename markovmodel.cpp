@@ -1,5 +1,9 @@
 #include "markovmodel.h"
 
-MarkovModel::MarkovModel()
-{
-}
+//MarkovModel::predict(int times)
+//{
+//    sourceKeys = reader->getKeys();
+//    sourceValues = reader->getValues();
+
+
+//}

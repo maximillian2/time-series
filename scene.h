@@ -24,7 +24,7 @@ private slots:
     void on_pushButton_clicked();
 
 private:
-    int index = 0;
+    int index;
     Ui::Scene *ui;
     QGraphicsScene *scene;
     vector <double> sourceSeries;

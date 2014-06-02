@@ -18,8 +18,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // default predictor type
     // predictor = new Bayesian(sr);
 
-
-
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -59,23 +57,13 @@ void MainWindow::on_calculatePushButton_clicked()
 
     predictor->predict(ui->spinBox_2->text().toInt());
 
-//    vector<double> temp = predictor->getResultValues();
+//    vector<double> x = {543,323,432,543,323,453,435,234,542};
+//    vector<double> y = {654,345,345,324,564,495};
+//    vector<double> z = {654,345,340,320,494,490};
 
-//    for ( int i = 0; i < temp.size(); ++i ) {
-//        std::cerr << temp[i] << std::endl;
-//    }
+    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
-//    temp = predictor->getResultValues();
-//    std::cerr << "Sources" << std::endl;
-
-//    for ( int i = 0; i < temp.size(); ++i ) {
-//        std::cerr << temp[i] << std::endl;
-//    }
-    vector<double> x = {543,323,432,543,323,453,435,234,542};
-    vector<double> y = {654,345,345,324,564,495};
-    vector<double> z = {654,345,340,320,494,490};
-    //scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
-    scene = new Scene(x,y,z);
+//    scene = new Scene(x,y,z);
     scene->show();
 }
 
@@ -92,7 +80,7 @@ void MainWindow::openFile()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     qDebug() << fileName;
     fileReader = new FileReader(fileName.toStdString());
-//    SeriesReader* sr = new FileReader("test.txt");
+    predictor = new Bayesian(fileReader);
 }
 
 void MainWindow::saveFile()
@@ -123,8 +111,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     switch(index)
     {
     case 0:
-//        delete predictor;
-//        predictor  = new Bayesian(fileReader);
+        delete predictor;
+        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
