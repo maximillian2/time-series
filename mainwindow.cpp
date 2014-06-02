@@ -119,7 +119,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     {
     case 0:
 //        delete predictor;
-//        predictor  = new Bayesian();
+//        predictor  = new Bayesian(fileReader);
     break;
 
     case 1:
