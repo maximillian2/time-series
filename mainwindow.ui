@@ -110,6 +110,12 @@
     </item>
     <item>
      <widget class="QTableView" name="tableView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
         <width>0</width>
@@ -339,20 +345,32 @@
    <property name="text">
     <string>Відкрити файл...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionSave">
    <property name="text">
     <string>Зберегти</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSave_as">
    <property name="text">
     <string>Зберегти як...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Вийти з програми</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>

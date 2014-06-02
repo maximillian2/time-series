@@ -6,26 +6,23 @@ void MarkovModel::predict(int times)
     sourceKeys   = reader->getKeys();
     sourceValues = reader->getValues();
 
+    double U0 = 0, elementsSum = 0;
+
     double alpha = 2.0 / sourceValues.size()+1;
-    qDebug() << "alpha = " << alpha;
 
-    double U0 = 0;
-    double elementsSum = 0;
+    vector<double> inputValues = sourceValues;
 
-    for(unsigned int i = 0; i < sourceValues.size(); i++)
-        elementsSum += sourceValues[i];
-
-    qDebug() << "Sum of elements = " << elementsSum;
-
-    U0 = elementsSum / sourceValues.size();
-
-    qDebug() << "First value = " << firstValue;
-
-    double temp = 0;
     for(int i = 0; i < times; i++)
     {
-        temp = alpha * sourceValues.back() + (1 - alpha) * U0;
-        qDebug() << temp;
-        U0 = temp;
+        for(unsigned int i = 0; i < inputValues.size(); i++)
+            elementsSum += inputValues[i];
+
+        U0 = elementsSum / inputValues.size();
+
+        inputValues.push_back(alpha * inputValues.back() + (1 - alpha) * U0);
+
+        resultValues.push_back(inputValues.back());
+
+        elementsSum = 0;
     }
 }
