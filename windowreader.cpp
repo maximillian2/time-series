@@ -3,6 +3,7 @@
 
 #include <QStandardItem>
 #include <QtDebug>
+#include <iostream>
 
 WindowReader::WindowReader(QWidget *parent) : QDialog(parent), ui(new Ui::WindowReader)
 {
@@ -24,6 +25,10 @@ void WindowReader::on_buttonBox_accepted()
         {
             keys.push_back(model->item(0, i)->text().toStdString());
             values.push_back(model->item(1, i)->text().toDouble());
+        }
+
+        for ( int i; i < values.size(); ++i ) {
+            std::cerr << "READ VALUE" << values[i] << std::endl;
         }
 
         qDebug() << "pushed up.";
