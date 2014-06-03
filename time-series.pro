@@ -15,7 +15,10 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     scene.cpp \
     builder.cpp \
-    markovmodel.cpp
+    markovmodel.cpp \
+    windowreader.cpp \
+    customtableview.cpp \
+    help.cpp
 
 HEADERS  += mainwindow.h \
     tsPrediction.h \
@@ -25,10 +28,15 @@ HEADERS  += mainwindow.h \
     scene.h \
     builder.h \
     bayesian.h \
-    markovmodel.h
+    markovmodel.h \
+    windowreader.h \
+    customtableview.h \
+    help.h
 
 FORMS    += mainwindow.ui \
-    scene.ui
+    scene.ui \
+    windowreader.ui \
+    help.ui
 
 RESOURCES += \
     images.qrc

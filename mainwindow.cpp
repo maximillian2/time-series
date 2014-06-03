@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
     fileReader = 0;
+    predicted = false;
 
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -27,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->statusbar->addWidget(activeFileLabel);
 
     ui->calculatePushButton->setEnabled(false);
-
 }
 
 MainWindow::~MainWindow()
@@ -58,12 +58,19 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(ui->predictPeriodSpinBox->text().toInt());
+    if(!predicted)
+    {
+        predictor->predict(ui->predictPeriodSpinBox->text().toInt());
+        predicted = true;
+//        qDebug() << "Entered";
+    }
 
 //    vector<double> x = {543,323,432,543,323,453,435,234,542};
 //    vector<double> y = {654,345,345,324,564,495};
 //    vector<double> z = {654,345,340,320,494,490};
-
+//    vector<double> result = predictor->getResultValues();
+//    for(int i = 0; i < result.size(); i++)
+//        qDebug() << "result = " << i;
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
 //    scene = new Scene(x,y,z);
@@ -116,6 +123,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
+    predicted = false;
     if(!fileReader)
         QMessageBox::warning(this, "No active file", "Select file or other source of data.");
     else

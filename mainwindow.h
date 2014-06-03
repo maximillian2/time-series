@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow, public SeriesReader
     
 public:
     explicit MainWindow(QWidget *parent = 0);
+    bool predicted;
+
     ~MainWindow();
     
 private slots:

@@ -12,11 +12,13 @@ class Builder
 public:
     Builder(vector<double> sourceSeries, vector<double> predictSeries, int view_height, int view_width, QGraphicsScene *scene);
 
+
     vector<double>srcSeries;
     vector<double>predSeries;
     vector<double>allSeries;
     int height, width, size, step;
     int x0,y0;
+    int j, i/*, i_next*/;
     QGraphicsScene *drawingScene;
     double dx,dy, max_y, min_y;
 
