@@ -8,12 +8,13 @@
 #include <QtDebug>
 #include <QFileDialog>
 #include <QtDebug>
-#include <iostream>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
+    fileReader = 0;
 
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -21,6 +22,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
+
+    activeFileLabel = new QLabel("Using: nothing");
+    ui->statusbar->addWidget(activeFileLabel);
+
+    ui->calculatePushButton->setEnabled(false);
+
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +58,7 @@ void MainWindow::on_calculatePushButton_clicked()
         values.push_back(model->item(1, i)->text().toDouble());
     }
 
-    predictor->predict(ui->spinBox_2->text().toInt());
+    predictor->predict(ui->predictPeriodSpinBox->text().toInt());
 
 //    vector<double> x = {543,323,432,543,323,453,435,234,542};
 //    vector<double> y = {654,345,345,324,564,495};
@@ -75,8 +82,13 @@ void MainWindow::openFile()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     qDebug() << fileName;
+
+    QFileInfo fileInfo(fileName);
+    activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
+
     fileReader = new FileReader(fileName.toStdString());
     predictor = new Bayesian(fileReader);
+    ui->calculatePushButton->setEnabled(true);
 }
 
 void MainWindow::saveFile()
@@ -103,27 +115,29 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    qDebug() << index << "  " << fileReader;
-    switch(index)
-    {
-    case 0:
-        delete predictor;
-        predictor  = new Bayesian(fileReader);
-    break;
+    if(!fileReader)
+        QMessageBox::warning(this, "No active file", "Select file or other source of data.");
+    else
+        switch(index)
+        {
+        case 0:
+            delete predictor;
+            predictor  = new Bayesian(fileReader);
+        break;
 
-    case 1:
-//        delete predictor;
-//        predictor = new FuzzySet();
-    break;
+        case 1:
+    //        delete predictor;
+    //        predictor = new FuzzySet();
+        break;
 
-    case 2:
-//        delete predictor;
-//        predictor = new NeuralSet();
-    break;
+        case 2:
+    //        delete predictor;
+    //        predictor = new NeuralSet();
+        break;
 
-    case 3:
-        delete predictor;
-        predictor = new MarkovModel(fileReader);
-    break;
-    }
+        case 3:
+            delete predictor;
+            predictor = new MarkovModel(fileReader);
+        break;
+        }
 }
