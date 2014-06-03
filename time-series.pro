@@ -15,7 +15,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     scene.cpp \
     builder.cpp \
-    markovmodel.cpp
+    markovmodel.cpp \
+    windowreader.cpp
 
 HEADERS  += mainwindow.h \
     tsPrediction.h \
@@ -25,10 +26,12 @@ HEADERS  += mainwindow.h \
     scene.h \
     builder.h \
     bayesian.h \
-    markovmodel.h
+    markovmodel.h \
+    windowreader.h
 
 FORMS    += mainwindow.ui \
-    scene.ui
+    scene.ui \
+    windowreader.ui
 
 RESOURCES += \
     images.qrc

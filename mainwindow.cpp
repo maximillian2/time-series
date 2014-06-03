@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->statusbar->addWidget(activeFileLabel);
 
     ui->calculatePushButton->setEnabled(false);
-
 }
 
 MainWindow::~MainWindow()
