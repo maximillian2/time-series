@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QLabel>
 #include "scene.h"
 #include "fileReader.h"
 #include "seriesReader.h"
@@ -40,6 +41,7 @@ private:
     Scene *scene;
     TsPredictor *predictor;
     SeriesReader *fileReader;
+    QLabel *activeFileLabel;
 };
 
 #endif // MAINWINDOW_H
