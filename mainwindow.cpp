@@ -4,6 +4,7 @@
 #include "bayesian.h"
 #include "markovmodel.h"
 #include "seriesReader.h"
+#include "fuzzyset.h"
 
 #include <QtDebug>
 #include <QFileDialog>
@@ -134,8 +135,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         break;
 
         case 1:
-    //        delete predictor;
-    //        predictor = new FuzzySet();
+            delete predictor;
+            predictor = new FuzzySet(fileReader);
         break;
 
         case 2:

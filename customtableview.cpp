@@ -1,5 +1,5 @@
 #include "customtableview.h"
 
-CustomTableView::CustomTableView(QObject *parent) : QTableView(parent)
+CustomTableView::CustomTableView(QWidget *parent) : QTableView(parent)
 {
 }

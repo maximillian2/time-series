@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     markovmodel.cpp \
     windowreader.cpp \
     customtableview.cpp \
-    help.cpp
+    help.cpp \
+    fuzzyset.cpp
 
 HEADERS  += mainwindow.h \
     tsPrediction.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     markovmodel.h \
     windowreader.h \
     customtableview.h \
-    help.h
+    help.h \
+    fuzzyset.h
 
 FORMS    += mainwindow.ui \
     scene.ui \
