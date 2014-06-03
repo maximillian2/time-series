@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
     fileReader = 0;
 
+        predicted = false;
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -51,7 +52,6 @@ void MainWindow::on_fillPushButton_clicked()
 
 void MainWindow::on_calculatePushButton_clicked()
 {
-    static bool predicted = false;
     for(int i = 0; i < model->columnCount(); i++)
     {
         keys.push_back(model->item(0, i)->text().toStdString());
@@ -122,6 +122,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
+    predicted = false;
     if(!fileReader)
         QMessageBox::warning(this, "No active file", "Select file or other source of data.");
     else

@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="CustomTableView" name="tableView">
+  <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -40,13 +40,6 @@
    </property>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CustomTableView</class>
-   <extends>QTableView</extends>
-   <header location="global">customtableview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
