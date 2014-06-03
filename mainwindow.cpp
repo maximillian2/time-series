@@ -13,16 +13,13 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    model = new QStandardItemModel(2, ui->spinBox->value(), this);
-    fileReader = 0;
+    seriesReader = 0;
     predicted = false;
-
-    ui->tableView->horizontalHeader()->hide();
-//    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
     connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
+    connect(ui->actionInsert_Data, SIGNAL(triggered()), this, SLOT(insertData()));
 
     activeFileLabel = new QLabel("Using: nothing");
     ui->statusbar->addWidget(activeFileLabel);
@@ -35,28 +32,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_fillPushButton_clicked()
-{
-    for (int row = 0; row < 2; ++row)
-    {
-        for (int column = 0; column < ui->spinBox->value(); ++column)
-        {
-            QStandardItem* item = new QStandardItem();
-            model->setVerticalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text() ) ) );
-            model->setVerticalHeaderItem(1, new QStandardItem( QString(ui->valuePerUnitEdit->text() ) ) );
-            model->setItem(row, column, item);
-        }
-    }
-    ui->tableView->setModel(model);
-}
-
 void MainWindow::on_calculatePushButton_clicked()
 {
-    for(int i = 0; i < model->columnCount(); i++)
-    {
-        keys.push_back(model->item(0, i)->text().toStdString());
-        values.push_back(model->item(1, i)->text().toDouble());
-    }
 
     if(!predicted)
     {
@@ -84,8 +61,8 @@ void MainWindow::exitApplication()
 
 void MainWindow::openFile()
 {
-    if ( !fileReader )
-        delete fileReader;
+    if ( !seriesReader )
+        delete seriesReader;
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
     qDebug() << fileName;
@@ -93,14 +70,26 @@ void MainWindow::openFile()
     QFileInfo fileInfo(fileName);
     activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
 
-    fileReader = new FileReader(fileName.toStdString());
-    predictor = new Bayesian(fileReader);
+    seriesReader = new FileReader(fileName.toStdString());
+    predictor = new Bayesian(seriesReader);
     ui->calculatePushButton->setEnabled(true);
 }
 
 void MainWindow::saveFile()
 {
     qDebug() << "Not available yet.";
+}
+
+void MainWindow::insertData()
+{
+    windowReader = new WindowReader;
+    seriesReader = windowReader;
+
+    windowReader->show();
+
+
+    ui->calculatePushButton->setEnabled(true);
+    qDebug() << "linked";
 }
 
 void MainWindow::on_onSeasonRadioButton_clicked()
@@ -123,14 +112,14 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     predicted = false;
-    if(!fileReader)
+    if(!seriesReader)
         QMessageBox::warning(this, "No active file", "Select file or other source of data.");
     else
         switch(index)
         {
         case 0:
             delete predictor;
-            predictor  = new Bayesian(fileReader);
+            predictor  = new Bayesian(seriesReader);
         break;
 
         case 1:
@@ -145,7 +134,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
         case 3:
             delete predictor;
-            predictor = new MarkovModel(fileReader);
+            predictor = new MarkovModel(seriesReader);
         break;
         }
 }

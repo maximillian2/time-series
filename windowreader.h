@@ -4,7 +4,7 @@
 #include "seriesReader.h"
 #include <QTableView>
 #include <QDialog>
-
+#include <QStandardItemModel>
 namespace Ui {
 class WindowReader;
 }
@@ -19,8 +19,12 @@ public:
 
 private slots:
 
-private:
+    void on_buttonBox_accepted();
 
+    void on_fillPushButton_clicked();
+
+private:
+    QStandardItemModel *model;
     Ui::WindowReader *ui;
 };
 
