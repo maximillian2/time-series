@@ -32,16 +32,16 @@ public:
     vector<double> getResultValues() { return resultValues; }
 
     void setPartsInSeason(int parts) {
-//		if ( parts > 0 ) {
-//			partsInSeason = parts;
-//		}
+        if ( parts > 0 ) {
+            partsInSeason = parts;
+        }
     }
 
 
     void setReader(SeriesReader* newReader) {
-//		if ( newReader != NULL ) {
-//			reader = newReader;
-//		}
+        if ( newReader != NULL ) {
+            reader = newReader;
+        }
     }
 
 
