@@ -34,8 +34,8 @@ Scene::Scene(vector <double> source, vector <double> predict, vector<double> fut
 
 Scene::~Scene()
 {
+    delete scene;
     delete ui;
-
 }
 
 void Scene::on_pushButton_clicked()

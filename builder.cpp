@@ -81,24 +81,24 @@ void Builder::drawOsi()
 
 void Builder::drawSeries()
 {
-    int j = 0, i = 0, i_next = 1;
-    for(i_next=1; i_next < srcSeries.size(); i_next++)
+    i=0; j=0;
+    for(int i_next=1; i_next < srcSeries.size(); i_next++)
     {
         drawingScene->addLine(x0 + dx*j, y0 - srcSeries[i]*dy, x0 + dx*(j+1), y0 - srcSeries[i_next]*dy, QPen());
         i++;
         j++;
-        qDebug() << "src - " << srcSeries[i];
+        //qDebug() << "src - " << i_next;
     }
     drawingScene->addLine(x0 + dx*j, y0 - srcSeries[i]*dy, x0 + dx*(j+1), y0 - predSeries[0]*dy, QPen());
     i = 0;
-    i_next = 1;
     j++;
-    for(i_next; i_next < predSeries.size(); i_next++)
+    for(int i_next=1; i_next < predSeries.size(); i_next++)
     {
         drawingScene->addLine(x0 + dx*j, y0 - predSeries[i]*dy, x0 + dx*(j+1), y0 - predSeries[i_next]*dy, QPen(Qt::DashLine));
         i++;
         j++;
-        qDebug() << "pred - " << predSeries[i];
+        //qDebug() << "pred" << i_next;
     }
+    /*i_next = 0; */i = 0; j = 0;
 }
 
