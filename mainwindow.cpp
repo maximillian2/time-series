@@ -87,7 +87,6 @@ void MainWindow::insertData()
 
     windowReader->show();
 
-
     ui->calculatePushButton->setEnabled(true);
     qDebug() << "linked";
 }
