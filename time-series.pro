@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     builder.cpp \
     markovmodel.cpp \
     windowreader.cpp \
-    customtableview.cpp \
     help.cpp
 
 HEADERS  += mainwindow.h \
@@ -30,7 +29,6 @@ HEADERS  += mainwindow.h \
     bayesian.h \
     markovmodel.h \
     windowreader.h \
-    customtableview.h \
     help.h
 
 FORMS    += mainwindow.ui \

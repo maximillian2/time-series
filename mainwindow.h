@@ -2,20 +2,21 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QStandardItemModel>
 #include <QLabel>
 #include "scene.h"
 #include "fileReader.h"
 #include "seriesReader.h"
 #include "tsPrediction.h"
+#include "windowreader.h"
 
 namespace Ui {
 class MainWindow;
 }
 
 class Builder;
+class WindowReader;
 
-class MainWindow : public QMainWindow, public SeriesReader
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
@@ -26,7 +27,6 @@ public:
     ~MainWindow();
     
 private slots:
-    void on_fillPushButton_clicked();
     void on_calculatePushButton_clicked();
     void on_onSeasonRadioButton_clicked();
     void on_offSeasonRadioButton_clicked();
@@ -38,14 +38,15 @@ public slots:
     void exitApplication();
     void openFile();
     void saveFile();
+    void insertData();
 
 private:
     Ui::MainWindow *ui;
-    QStandardItemModel *model;
     Scene *scene;
     TsPredictor *predictor;
-    SeriesReader *fileReader;
+    SeriesReader *seriesReader;
     QLabel *activeFileLabel;
+    WindowReader *windowReader;
 };
 
 #endif // MAINWINDOW_H
