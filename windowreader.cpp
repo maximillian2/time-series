@@ -10,8 +10,3 @@ WindowReader::~WindowReader()
 {
     delete ui;
 }
-
-void WindowReader::on_tableView_clicked(const QModelIndex &index)
-{
-
-}

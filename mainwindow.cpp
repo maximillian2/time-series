@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
     fileReader = 0;
+    predicted = false;
 
-        predicted = false;
     ui->tableView->horizontalHeader()->hide();
 //    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -62,7 +62,7 @@ void MainWindow::on_calculatePushButton_clicked()
     {
         predictor->predict(ui->predictPeriodSpinBox->text().toInt());
         predicted = true;
-        qDebug() << "Entered";
+//        qDebug() << "Entered";
     }
 
 //    vector<double> x = {543,323,432,543,323,453,435,234,542};

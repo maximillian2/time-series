@@ -2,6 +2,7 @@
 #define WINDOWREADER_H
 
 #include "seriesReader.h"
+#include <QTableView>
 #include <QDialog>
 
 namespace Ui {
@@ -17,9 +18,9 @@ public:
     ~WindowReader();
 
 private slots:
-    void on_tableView_clicked(const QModelIndex &index);
 
 private:
+
     Ui::WindowReader *ui;
 };
 
