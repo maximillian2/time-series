@@ -8,7 +8,7 @@ class CustomTableView : public QTableView, public SeriesReader
 {
     Q_OBJECT
 public:
-    explicit CustomTableView(QObject *parent = 0);
+    explicit CustomTableView(QWidget *parent = 0);
 
 signals:
 
