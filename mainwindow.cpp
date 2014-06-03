@@ -65,6 +65,7 @@ void MainWindow::openFile()
         delete seriesReader;
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+
     qDebug() << fileName;
 
     QFileInfo fileInfo(fileName);
@@ -136,4 +137,19 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
             predictor = new MarkovModel(seriesReader);
         break;
         }
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                    "/home",
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    ofstream out((dir.toStdString() + "/result.txt").c_str());
+
+    vector<double> res = predictor->getResultValues();
+
+    for ( int i = 0; i < res.size(); ++i ) {
+        out << res[i] << ", ";
+    }
 }

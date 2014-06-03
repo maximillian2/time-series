@@ -32,6 +32,8 @@ private slots:
     void on_offSeasonRadioButton_clicked();
     void on_comboBox_currentIndexChanged(int index);
 
+    void on_actionSave_as_triggered();
+
 public slots:
     void exitApplication();
     void openFile();
