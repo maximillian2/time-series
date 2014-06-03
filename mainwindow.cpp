@@ -39,7 +39,6 @@ void MainWindow::on_calculatePushButton_clicked()
     {
         predictor->predict(ui->predictPeriodSpinBox->text().toInt());
         predicted = true;
-//        qDebug() << "Entered";
     }
 
 //    vector<double> x = {543,323,432,543,323,453,435,234,542};
@@ -91,7 +90,6 @@ void MainWindow::insertData()
     windowReader->show();
 
     ui->calculatePushButton->setEnabled(true);
-    qDebug() << "linked";
 }
 
 void MainWindow::on_onSeasonRadioButton_clicked()

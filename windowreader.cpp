@@ -28,7 +28,7 @@ void WindowReader::on_buttonBox_accepted()
         }
 
         for ( int i; i < values.size(); ++i ) {
-            std::cerr << "READ VALUE" << values[i] << std::endl;
+            qDebug() << "READ VALUE" << values[i];
         }
 
         qDebug() << "pushed up.";
