@@ -36,7 +36,6 @@ private slots:
 public slots:
     void exitApplication();
     void openFile();
-    void saveFile();
     void insertData();
     void offlineHelp();
     void onlineHelp();
