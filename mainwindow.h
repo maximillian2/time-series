@@ -6,7 +6,7 @@
 #include "scene.h"
 #include "fileReader.h"
 #include "seriesReader.h"
-#include "tsPrediction.h"
+#include "tsPredictor.h"
 #include "windowreader.h"
 
 namespace Ui {

@@ -1,7 +1,7 @@
 #include "fuzzyset.h"
-#include "fileReader.h"
-#include "tsPrediction.h"
-#include "seriesReader.h"
+//#include "fileReader.h"
+//#include "tsPredictor.h"
+//#include "seriesReader.h"
 
 #include <new>
 

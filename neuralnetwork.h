@@ -2,7 +2,7 @@
 #define NEURALNETWORK_H
 
 #include "fileReader.h"
-#include "tsPrediction.h"
+#include "tsPredictor.h"
 #include "seriesReader.h"
 #include <vector>
 #include <string>

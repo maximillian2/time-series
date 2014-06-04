@@ -2,7 +2,7 @@
 #define BAYESIAN
 
 #include "fileReader.h"
-#include "tsPrediction.h"
+#include "tsPredictor.h"
 #include "seriesReader.h"
 
 #include <new>

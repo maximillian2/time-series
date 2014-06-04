@@ -23,7 +23,6 @@ SOURCES += main.cpp\
     neuralnetwork.cpp
 
 HEADERS  += mainwindow.h \
-    tsPrediction.h \
     seriesReader.h \
     fileReader.h \
     consoleReader.h \
@@ -35,7 +34,8 @@ HEADERS  += mainwindow.h \
     customtableview.h \
     help.h \
     fuzzyset.h \
-    neuralnetwork.h
+    neuralnetwork.h \
+    tsPredictor.h
 
 FORMS    += mainwindow.ui \
     scene.ui \
