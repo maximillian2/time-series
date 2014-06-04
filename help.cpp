@@ -14,6 +14,7 @@ Help::Help(QWidget *parent) : QDialog(parent), ui(new Ui::Help)
         QMessageBox::information(0, "File error!", file.errorString());
 
     QTextStream stream(&file);
+    stream.setCodec("UTF-8");
 
     ui->textBrowser->setText(stream.readAll());
 }
