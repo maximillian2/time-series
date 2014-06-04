@@ -13,6 +13,7 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -20,12 +21,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     seriesReader = 0;
     predicted = false;
 
-    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(ui->actionInsert_Data, SIGNAL(triggered()), this, SLOT(insertData()));
     connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
-    connect(ui->actionInsert_Data, SIGNAL(triggered()), this, SLOT(insertData()));
+    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
     connect(ui->actionOnline_manual, SIGNAL(triggered()), this, SLOT(onlineHelp()));
     connect(ui->actionOffline_Manual, SIGNAL(triggered()), this, SLOT(offlineHelp()));
+    connect(ui->actionAbout_Series, SIGNAL(triggered()), this, SLOT(aboutSeries()));
 
     activeFileLabel = new QLabel("Using: nothing");
     ui->statusbar->addWidget(activeFileLabel);
@@ -88,11 +91,12 @@ void MainWindow::saveFile()
 
 void MainWindow::insertData()
 {
-    windowReader = new WindowReader;
+    windowReader = new WindowReader(this);
     seriesReader = windowReader;
 
     windowReader->show();
 
+    activeFileLabel->setText(QString("Using: program input"));
     ui->calculatePushButton->setEnabled(true);
 }
 
@@ -105,6 +109,16 @@ void MainWindow::offlineHelp()
 void MainWindow::onlineHelp()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series"));
+}
+
+void MainWindow::aboutSeries()
+{
+    QMessageBox::about(this, tr("Про Time Series"),
+            tr("<h2>Time Series 1.0</h2>"
+               "<p>Copyright &copy; 2014 GoogleKiller Inc."
+               "<p>Time Series - це застосування для "
+               "моделювання часових рядів з використанням  "
+               "графіків."));
 }
 
 void MainWindow::on_onSeasonRadioButton_clicked()

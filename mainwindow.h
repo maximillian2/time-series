@@ -40,6 +40,7 @@ public slots:
     void insertData();
     void offlineHelp();
     void onlineHelp();
+    void aboutSeries();
 
 private:
     Ui::MainWindow *ui;
