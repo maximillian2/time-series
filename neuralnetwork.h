@@ -11,7 +11,7 @@
 class NeuralNetwork:public TsPredictor
 {
 public:
-    NeuralNetwork(SeriesReader* sr) : TsPredictor(sr) {};
+    NeuralNetwork(SeriesReader* sr) : TsPredictor(sr) {}
     void predict(int times);
 
     template <class K>

@@ -5,6 +5,7 @@
 #include "markovmodel.h"
 #include "seriesReader.h"
 #include "fuzzyset.h"
+#include "neuralnetwork.h"
 
 #include <QtDebug>
 #include <QFileDialog>
@@ -129,8 +130,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         break;
 
         case 2:
-    //        delete predictor;
-    //        predictor = new NeuralSet();
+            delete predictor;
+            predictor = new NeuralNetwork(seriesReader);
         break;
 
         case 3:

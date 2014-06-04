@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     windowreader.cpp \
     customtableview.cpp \
     help.cpp \
-    fuzzyset.cpp
+    fuzzyset.cpp \
+    neuralnetwork.cpp
 
 HEADERS  += mainwindow.h \
     tsPrediction.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     windowreader.h \
     customtableview.h \
     help.h \
-    fuzzyset.h
+    fuzzyset.h \
+    neuralnetwork.h
 
 FORMS    += mainwindow.ui \
     scene.ui \

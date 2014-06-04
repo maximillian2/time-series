@@ -36,7 +36,7 @@ void NeuralNetwork::predict(int times){
 }
 
 template <class K>
-NeuralNetwork::getVectorSum(vector<K> vec) {
+K NeuralNetwork::getVectorSum(vector<K> vec) {
     K sum = 0.0;
 
     for(int i=0; i<vec.size(); i++) {
