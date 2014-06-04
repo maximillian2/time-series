@@ -43,7 +43,7 @@ FORMS    += mainwindow.ui \
     help.ui
 
 RESOURCES += \
-    images.qrc
+    additional.qrc
 
 CONFIG += c++11
 

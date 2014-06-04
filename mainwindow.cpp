@@ -6,11 +6,13 @@
 #include "seriesReader.h"
 #include "fuzzyset.h"
 #include "neuralnetwork.h"
+#include "help.h"
 
 #include <QtDebug>
 #include <QFileDialog>
 #include <QtDebug>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -22,11 +24,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(saveFile()));
     connect(ui->actionInsert_Data, SIGNAL(triggered()), this, SLOT(insertData()));
+    connect(ui->actionOnline_manual, SIGNAL(triggered()), this, SLOT(onlineHelp()));
+    connect(ui->actionOffline_Manual, SIGNAL(triggered()), this, SLOT(offlineHelp()));
 
     activeFileLabel = new QLabel("Using: nothing");
     ui->statusbar->addWidget(activeFileLabel);
-
-    ui->calculatePushButton->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -92,6 +94,17 @@ void MainWindow::insertData()
     windowReader->show();
 
     ui->calculatePushButton->setEnabled(true);
+}
+
+void MainWindow::offlineHelp()
+{
+    Help *help = new Help(this);
+    help->show();
+}
+
+void MainWindow::onlineHelp()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series"));
 }
 
 void MainWindow::on_onSeasonRadioButton_clicked()

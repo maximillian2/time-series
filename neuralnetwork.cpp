@@ -6,12 +6,12 @@ void NeuralNetwork::predict(int times){
     sourceValues = reader->getValues();
 
     vector<int> keys;
-    for (int i=1;i<=sourceKeys.size();i++)
+    for (unsigned int i=1;i<=sourceKeys.size();i++)
         keys.push_back(i);
 
     vector<double> keysMulValues;
     vector<int> keysPow2;
-    for(int i=0;i<keys.size();i++) {
+    for(unsigned int i=0;i<keys.size();i++) {
         keysMulValues.push_back(keys[i] * sourceValues[i]);
         keysPow2.push_back(keys[i] * keys[i]);
     }
@@ -39,7 +39,7 @@ template <class K>
 K NeuralNetwork::getVectorSum(vector<K> vec) {
     K sum = 0.0;
 
-    for(int i=0; i<vec.size(); i++) {
+    for(unsigned  int i=0; i<vec.size(); i++) {
         sum += vec[i];
     }
 

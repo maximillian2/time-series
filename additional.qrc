@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>series_logo.png</file>
+        <file>manual_page.text</file>
+        <file>series_logo_small.png</file>
     </qresource>
 </RCC>

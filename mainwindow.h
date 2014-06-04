@@ -31,7 +31,6 @@ private slots:
     void on_onSeasonRadioButton_clicked();
     void on_offSeasonRadioButton_clicked();
     void on_comboBox_currentIndexChanged(int index);
-
     void on_actionSave_as_triggered();
 
 public slots:
@@ -39,6 +38,8 @@ public slots:
     void openFile();
     void saveFile();
     void insertData();
+    void offlineHelp();
+    void onlineHelp();
 
 private:
     Ui::MainWindow *ui;
