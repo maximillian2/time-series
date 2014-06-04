@@ -27,9 +27,9 @@ void WindowReader::on_buttonBox_accepted()
             values.push_back(model->item(1, i)->text().toDouble());
         }
 
-        for ( int i; i < values.size(); ++i ) {
-            qDebug() << "READ VALUE" << values[i];
-        }
+//        for ( int i; i < values.size(); ++i ) {
+//            qDebug() << "READ VALUE" << values[i];
+//        }
 
         qDebug() << "pushed up.";
 }
