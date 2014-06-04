@@ -44,8 +44,10 @@ void MainWindow::on_calculatePushButton_clicked()
 
     if(!predicted)
     {
+        qDebug() << "before predict";
         predictor->predict(ui->predictPeriodSpinBox->text().toInt());
         predicted = true;
+        qDebug() << "after";
     }
 
 //    vector<double> x = {543,323,432,543,323,453,435,234,542};
@@ -74,13 +76,14 @@ void MainWindow::openFile()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
 
-    qDebug() << fileName;
+//    qDebug() << fileName;
 
     QFileInfo fileInfo(fileName);
     activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
 
     seriesReader = new FileReader(fileName.toStdString());
     predictor = new Bayesian(seriesReader);
+    ui->groupBox->setEnabled(true);
     ui->calculatePushButton->setEnabled(true);
 }
 
@@ -91,12 +94,17 @@ void MainWindow::saveFile()
 
 void MainWindow::insertData()
 {
+    if ( !seriesReader )
+        delete seriesReader;
+
     windowReader = new WindowReader(this);
     seriesReader = windowReader;
 
     windowReader->show();
 
     activeFileLabel->setText(QString("Using: program input"));
+
+    ui->groupBox->setEnabled(true);
     ui->calculatePushButton->setEnabled(true);
 }
 

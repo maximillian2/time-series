@@ -11,7 +11,7 @@ WindowReader::WindowReader(QWidget *parent) : QDialog(parent), ui(new Ui::Window
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
     ui->tableView->horizontalHeader()->hide();
-//    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 WindowReader::~WindowReader()
@@ -25,12 +25,8 @@ void WindowReader::on_buttonBox_accepted()
         {
             keys.push_back(model->item(0, i)->text().toStdString());
             values.push_back(model->item(1, i)->text().toDouble());
+            qDebug() << "k = " << model->item(0,i)->text().toLatin1() << "; v = " << model->item(1,i)->text().toDouble();
         }
-
-//        for ( int i; i < values.size(); ++i ) {
-//            qDebug() << "READ VALUE" << values[i];
-//        }
-
         qDebug() << "pushed up.";
 }
 

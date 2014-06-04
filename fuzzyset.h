@@ -10,7 +10,7 @@
 class FuzzySet:public TsPredictor
 {
 public:
-    FuzzySet(SeriesReader* sr) : TsPredictor(sr) {};
+    FuzzySet(SeriesReader* sr) : TsPredictor(sr) {}
     void predict(int size);
 };
 

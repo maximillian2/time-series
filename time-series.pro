@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     builder.cpp \
     markovmodel.cpp \
     windowreader.cpp \
-    customtableview.cpp \
     help.cpp \
     fuzzyset.cpp \
     neuralnetwork.cpp
@@ -31,7 +30,6 @@ HEADERS  += mainwindow.h \
     bayesian.h \
     markovmodel.h \
     windowreader.h \
-    customtableview.h \
     help.h \
     fuzzyset.h \
     neuralnetwork.h \
