@@ -44,13 +44,21 @@ Builder::Builder(vector<double> sourceSeries, vector<double> predictSeries, int 
     x0=10;
 
 
-    //find step
+    //find step_y
     if(max_y > 100 && max_y < 1000)
-        step = dy*10;
+        step_y = dy*10;
     else if(max_y > 1 && max_y < 100)
-        step = dy;
+        step_y = dy;
     else if (max_y < 1)
-        step = dy/10;
+        step_y = dy/10;
+
+    //find step_x
+    if(size > 100&&size<1000)
+        step_x = size/10;
+    else if(size<100)
+        step_x = size;
+    else if(size>1000)
+        step_x = size/100;
 
       y0=height-height/20;
 }
@@ -69,10 +77,10 @@ void Builder::drawOsi()
     drawingScene->addLine(10,0+height/15,10-width/100,0+height/8,QPen());
 
     //notches
-    for(int i = 1; i < size-2; i++)
-        drawingScene->addLine(10+dx*(i),height-height/17,10+dx*(i),height-height/24);//x notches
+    for(int i = 1; (i*step_x) < width-width/20-20; i++)
+        drawingScene->addLine(x0+step_x*(i),height-height/17,x0+step_x*(i),height-height/24);//x notches
 
-    for(int i = y0-step; i > 0+height/15+step; i= i-step)
+    for(int i = y0-step_y; i > 0+height/15+step_y; i= i-step_y)
         drawingScene->addLine(7,i,13,i,QPen());//y notches
 
     QGraphicsTextItem *text = drawingScene->addText("(c) G.D. aka Morphei, 2014",QFont());

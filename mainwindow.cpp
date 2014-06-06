@@ -50,10 +50,10 @@ void MainWindow::on_calculatePushButton_clicked()
 //    for(int i = 0; i < result.size(); i++)
 //        qDebug() << "result = " << i;
 
-//    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
+    scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
 
 //    scene = new Scene(x,y,z);
-//    scene->show();
+    scene->show();
 }
 
 void MainWindow::exitApplication()

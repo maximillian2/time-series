@@ -16,7 +16,7 @@ public:
     vector<double>srcSeries;
     vector<double>predSeries;
     vector<double>allSeries;
-    int height, width, size, step;
+    int height, width, size, step_y, step_x;
     int x0,y0;
     int j, i/*, i_next*/;
     QGraphicsScene *drawingScene;

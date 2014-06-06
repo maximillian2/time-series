@@ -1,6 +1,7 @@
 #include "fuzzyset.h"
 #include "fileReader.h"
 #include "tsPrediction.h"
+#include <QTime>
 #include "seriesReader.h"
 
 #include <new>
@@ -128,7 +129,7 @@ void FuzzySet::predict(int times) {
             double Yx = 0, sumX= 0, xq= 0, Y= 0;
 
             for (unsigned int i = 1 ; i <= sourceValues.size(); ++i ) {
-                Yx 	 += i * sourceValues[i-1];
+                Yx 	 += i * sourceValues[i-1]+qrand()%5;
                 sumX += i;
                 xq   += i * i;
                 Y += sourceValues[i-1];
@@ -137,7 +138,7 @@ void FuzzySet::predict(int times) {
 
             double a = 0, b = 0;
 
-            a = (Yx - (sumX*Y)/sourceValues.size())/(xq - (sumX * sumX)/sourceValues.size());
+            a = (Yx - (sumX*Y)/sourceValues.size())/(xq + (sumX * sumX)/sourceValues.size());
             b = Y/sourceValues.size() - a*sumX/sourceValues.size();
 
 
