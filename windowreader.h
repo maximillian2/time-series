@@ -15,12 +15,11 @@ class WindowReader : public QDialog, public SeriesReader
 
 public:
     explicit WindowReader(QWidget *parent = 0);
+
     ~WindowReader();
 
 private slots:
-
     void on_buttonBox_accepted();
-
     void on_fillPushButton_clicked();
 
 private:

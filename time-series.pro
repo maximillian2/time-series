@@ -17,12 +17,11 @@ SOURCES += main.cpp\
     builder.cpp \
     markovmodel.cpp \
     windowreader.cpp \
-    customtableview.cpp \
     help.cpp \
-    fuzzyset.cpp
+    fuzzyset.cpp \
+    neuralnetwork.cpp
 
 HEADERS  += mainwindow.h \
-    tsPrediction.h \
     seriesReader.h \
     fileReader.h \
     consoleReader.h \
@@ -31,9 +30,10 @@ HEADERS  += mainwindow.h \
     bayesian.h \
     markovmodel.h \
     windowreader.h \
-    customtableview.h \
     help.h \
-    fuzzyset.h
+    fuzzyset.h \
+    neuralnetwork.h \
+    tsPredictor.h
 
 FORMS    += mainwindow.ui \
     scene.ui \
@@ -41,7 +41,7 @@ FORMS    += mainwindow.ui \
     help.ui
 
 RESOURCES += \
-    images.qrc
+    additional.qrc
 
 CONFIG += c++11
 

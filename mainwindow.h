@@ -6,7 +6,7 @@
 #include "scene.h"
 #include "fileReader.h"
 #include "seriesReader.h"
-#include "tsPrediction.h"
+#include "tsPredictor.h"
 #include "windowreader.h"
 
 namespace Ui {
@@ -31,14 +31,15 @@ private slots:
     void on_onSeasonRadioButton_clicked();
     void on_offSeasonRadioButton_clicked();
     void on_comboBox_currentIndexChanged(int index);
-
     void on_actionSave_as_triggered();
 
 public slots:
     void exitApplication();
     void openFile();
-    void saveFile();
     void insertData();
+    void offlineHelp();
+    void onlineHelp();
+    void aboutSeries();
 
 private:
     Ui::MainWindow *ui;
