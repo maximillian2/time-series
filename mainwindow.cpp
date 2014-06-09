@@ -15,21 +15,24 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 
+const QString ONLINE_LINK = "https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series";
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     seriesReader = 0;
-    predicted = false;
+    predictor    = 0;
+    predictor = new Bayesian(seriesReader);
 
-    connect(ui->actionInsert_Data, SIGNAL(triggered()), this, SLOT(insertData()));
-    connect(ui->actionOpen_file, SIGNAL(triggered()), this, SLOT(openFile()));
-    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(ui->actionInsert_Data,    SIGNAL(triggered()), this, SLOT(insertData()));
+    connect(ui->actionOpen_file,      SIGNAL(triggered()), this, SLOT(openFile()));
+    connect(ui->actionExit,           SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-    connect(ui->actionOnline_manual, SIGNAL(triggered()), this, SLOT(onlineHelp()));
+    connect(ui->actionOnline_manual,  SIGNAL(triggered()), this, SLOT(onlineHelp()));
     connect(ui->actionOffline_Manual, SIGNAL(triggered()), this, SLOT(offlineHelp()));
-    connect(ui->actionAbout_Series, SIGNAL(triggered()), this, SLOT(aboutSeries()));
+    connect(ui->actionAbout_Series,   SIGNAL(triggered()), this, SLOT(aboutSeries()));
 
-    activeFileLabel = new QLabel("Using: nothing");
+    activeFileLabel = new QLabel("Нічого не використовуємо");
     ui->statusbar->addWidget(activeFileLabel);
 }
 
@@ -40,26 +43,34 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_calculatePushButton_clicked()
 {
+    if ( ui->onSeasonRadioButton->isChecked() ) {
 
+<<<<<<< HEAD
     if(!predicted)
     {
         qDebug() << "before predict";
         predictor->predict(ui->predictPeriodSpinBox->value());
         predicted = true;
+=======
+        predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
+        predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
+
+    } else {
+        predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
+>>>>>>> f9adedea77604814cbd7340987351e831938ed08
     }
 
-//    vector<double> x = {543,323,432,543,323,453,435,234,542};
-//    vector<double> y = {654,345,345,324,564,495};
-//    vector<double> z = {654,345,340,320,494,490};
-//     qDebug() << "result";
-//    vector<double> result = predictor->getResultValues();
-//    for(int i = 0; i < result.size(); i++)
-//        qDebug() << "result = " << i;
+    qDebug() << "before predict";
+    predictor->predict(ui->predictPeriodSpinBox->text().toInt());
+    qDebug() << "after";
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
-
-//    scene = new Scene(x,y,z);
     scene->show();
+
+    ui->actionSave_as->setEnabled(true);
+
+    predictor->eraseResult();
+
 }
 
 void MainWindow::exitApplication()
@@ -69,51 +80,64 @@ void MainWindow::exitApplication()
 
 void MainWindow::openFile()
 {
-    if ( !seriesReader )
+    if ( seriesReader )
         delete seriesReader;
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Відкрити файл"), "", tr("Текстові файли (*.txt)"));
+    if (!fileName.isEmpty())
+    {
+        QFileInfo fileInfo(fileName);
 
-    QFileInfo fileInfo(fileName);
-    activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
+        activeFileLabel->setText(QString("Використовуємо файл: %1").arg(fileInfo.fileName()));
 
-    seriesReader = new FileReader(fileName.toStdString());
-    predictor = new Bayesian(seriesReader);
-    ui->groupBox->setEnabled(true);
-    ui->calculatePushButton->setEnabled(true);
+        seriesReader = new FileReader(fileName.toStdString());
+        predictor->setReader(seriesReader);
+
+        ui->groupBox            ->setEnabled(true);
+        ui->calculatePushButton ->setEnabled(true);
+    }
 }
 
 void MainWindow::insertData()
 {
-    if ( !seriesReader )
+    if ( seriesReader ) {
         delete seriesReader;
+    }
 
     windowReader = new WindowReader(this);
-    windowReader->exec();
 
-    seriesReader = windowReader;
+    // 1 - accepted, 0 - rejected
+    int result = windowReader->exec();
 
-    activeFileLabel->setText(QString("Using: program input"));
+    if(result)
+    {
+        seriesReader = windowReader;
 
-    ui->groupBox->setEnabled(true);
-    ui->calculatePushButton->setEnabled(true);
+        activeFileLabel->setText(QString("Використовуємо: програмне введення"));
+
+        ui->groupBox            ->setEnabled(true);
+        ui->calculatePushButton ->setEnabled(true);
+        predictor->setReader(seriesReader);
+    }
+    else
+        activeFileLabel->setText(QString("Нічого не використовуємо"));
 }
 
 void MainWindow::offlineHelp()
 {
     Help *help = new Help(this);
-    help->show();
+    help->exec();
 }
 
 void MainWindow::onlineHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series"));
+    QDesktopServices::openUrl(QUrl(ONLINE_LINK));
 }
 
 void MainWindow::aboutSeries()
 {
-    QMessageBox::about(this, tr("Про Time Series"),
-            tr("<h2>Time Series 1.0</h2>"
+    QMessageBox::about(this, ("Про Time Series"),
+            ("<h2>Time Series 1.0</h2>"
                "<p>Copyright &copy; 2014 GoogleKiller Inc."
                "<p>Time Series - це застосування для "
                "моделювання часових рядів з використанням  "
@@ -122,57 +146,56 @@ void MainWindow::aboutSeries()
 
 void MainWindow::on_onSeasonRadioButton_clicked()
 {
-    predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
-    predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
-
     ui->partsLabel->setEnabled(true);
     ui->partsSpinBox->setEnabled(true);
 }
 
 void MainWindow::on_offSeasonRadioButton_clicked()
 {
-    predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
-
     ui->partsLabel->setEnabled(false);
     ui->partsSpinBox->setEnabled(false);
 }
 
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
-    predicted = false;
     if(!seriesReader)
-        QMessageBox::warning(this, "No active file", "Select file or other source of data.");
+        QMessageBox::warning(this, "Нема активного джерела", "Виберіть джерело інформації.");
     else
+    {
+       if (predictor) delete predictor;
+
+        ui->groupBox->setEnabled(true);
         switch(index)
         {
         case 1:
-//            if (predictor) delete predictor;
             predictor  = new Bayesian(seriesReader);
         break;
 
         case 2:
-//            delete predictor;
             predictor = new FuzzySet(seriesReader);
         break;
 
         case 3:
-//            delete predictor;
             predictor = new NeuralNetwork(seriesReader);
         break;
 
         case 4:
-//            delete predictor;
             predictor = new MarkovModel(seriesReader);
         break;
+
+        default:
+            ui->groupBox->setEnabled(false);
         }
+    }
 }
 
 void MainWindow::on_actionSave_as_triggered()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Відкрити директорію"),
                                                     "/home",
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
+
     ofstream out((dir.toStdString() + "/result.txt").c_str());
 
     vector<double> res = predictor->getResultValues();

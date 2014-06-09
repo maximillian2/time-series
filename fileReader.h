@@ -41,6 +41,10 @@ public:
 			source >> delim;
 		}
 	}
+
+    virtual ~FileReader() {
+        source.close();
+    }
 };
 
 

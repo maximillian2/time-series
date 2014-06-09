@@ -1,5 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
+#include "bayesian.h"
+#include "fileReader.h"
 
  int main(int argc, char *argv[])
  {

@@ -26,6 +26,8 @@ public:
             cin >> delim;
         }
     }
+
+    virtual ~ConsoleReader() {}
 };
 
 #endif  // CONSOLE_READER
