@@ -6,6 +6,7 @@
 #include "seriesReader.h"
 
 #include <new>
+#include <iostream>
 
 class Bayesian : public TsPredictor {
 public:
@@ -16,145 +17,146 @@ public:
     //  Only filled  result vectors.
 	void predict(int times) {
 
-		sourceKeys   = reader->getKeys();
-		sourceValues = reader->getValues();
 
-		switch ( seriesType ) {
+        sourceKeys   = reader->getKeys();
+        sourceValues = reader->getValues();
+
+        switch ( seriesType ) {
 			
-			case ( WITHOUT_SEASONAL_VARIATON ) : {
-				
-				const int N = 3; // 
+            case ( WITHOUT_SEASONAL_VARIATON ) : {
 
-				vector<string> movingAverageKeys;
-				vector<double> movingAverageValues;
+                const int N = 3;
 
-				// auto it = sourceValues.begin();
+                vector<string> movingAverageKeys;
+                vector<double> movingAverageValues;
 
-				// ++it;
-				
                 for (unsigned int i = 1; i < sourceKeys.size()-1 ; ++i) {
-					double average = sourceValues[i]; 
+                    double average = sourceValues[i];
 
-					for ( int j = 1; j <= 1; j ++ ) {
-						average += sourceValues[i+j]; 
-						average += sourceValues[i-j]; 
-					}
+                    for ( int j = 1; j <= 1; j ++ ) {
+                        average += sourceValues[i+j];
+                        average += sourceValues[i-j];
+                    }
 
-					average /= N;
+                    average /= N;
 
-					movingAverageKeys	.push_back(sourceKeys[i]);
-					movingAverageValues	.push_back(average);
+                    movingAverageKeys	.push_back(sourceKeys[i]);
+                    movingAverageValues	.push_back(average);
 
-				}
+                }
 
-				for ( int t = 0; t < times; ++t ) {
-					double value = movingAverageValues[movingAverageValues.size()-1];
+                for ( int t = 0; t < times; ++t ) {
+                    double value = movingAverageValues[movingAverageValues.size()-1];
 
-					value += (1.0/3.0)*(sourceValues[sourceValues.size()-1] - sourceValues[sourceValues.size()-2]);
+                    value += (1.0/3.0)*(sourceValues[sourceValues.size()-1] - sourceValues[sourceValues.size()-2]);
 				
-					sourceValues.push_back(value);
+                    sourceValues.push_back(value);
                     resultValues.push_back(value);
 
-					int lastSource = sourceValues.size()-1;
+                    int lastSource = sourceValues.size()-1;
 
-					movingAverageValues.push_back((sourceValues[lastSource]+sourceValues[lastSource-1]+sourceValues[lastSource-2]) / 3.0);
-				}
+                    movingAverageValues.push_back((sourceValues[lastSource]+sourceValues[lastSource-1]+sourceValues[lastSource-2]) / 3.0);
+                }
+
+                for ( int i = 0; i < times; ++i ) {
+                    sourceValues.pop_back();
+                }
 
                 for (unsigned int i = 0; i < resultValues.size() ; ++i)
-				{
+                {
                     std::cout << resultValues[i] << std::endl;
-				}
+                }
 
-			break;
+            break;
 
-			}
+            }
 
-			case (WITH_SEASONAL_VARIATON) : {
-				int seasons = sourceValues.size() / partsInSeason;
-				int seasSumAmnt = seasons * partsInSeason - partsInSeason + 1;
+            case (WITH_SEASONAL_VARIATON) : {
+                int seasons = sourceValues.size() / partsInSeason;
+                int seasSumAmnt = seasons * partsInSeason - partsInSeason + 1;
 
-				double seasonSum [seasSumAmnt];
-				double seasonAver[seasSumAmnt];
+                double seasonSum [seasSumAmnt];
+                double seasonAver[seasSumAmnt];
 
-				for (int i = 0; i < seasSumAmnt; ++i)
-				{	
-					seasonSum[i] = 0;
+                for (int i = 0; i < seasSumAmnt; ++i)
+                {
+                    seasonSum[i] = 0;
 
-					for (int j = i; j < i + seasons; ++j)
-					{
-						seasonSum[i] += sourceValues[j];	
-					}
-				}
+                    for (int j = i; j < i + seasons; ++j)
+                    {
+                        seasonSum[i] += sourceValues[j];
+                    }
+                }
 
-				for (int i = 0; i < seasSumAmnt; ++i)
-				{
-					seasonAver[i] = seasonSum[i] / seasons;
-				}
+                for (int i = 0; i < seasSumAmnt; ++i)
+                {
+                    seasonAver[i] = seasonSum[i] / seasons;
+                }
 
-				double centeredAver[seasSumAmnt-1];
+                double centeredAver[seasSumAmnt-1];
 
-				for (int i = 0; i < seasSumAmnt-1; ++i)
-				{
-					 centeredAver[i] = (seasonAver[i] + seasonAver[i+1]) / 2.0;
-				}
+                for (int i = 0; i < seasSumAmnt-1; ++i)
+                {
+                     centeredAver[i] = (seasonAver[i] + seasonAver[i+1]) / 2.0;
+                }
 
-				double seasMark[seasSumAmnt-1];
-				double temp     [seasSumAmnt-1];
+                double seasMark[seasSumAmnt-1];
+                double temp     [seasSumAmnt-1];
 
-				int indexes = seasons * partsInSeason - partsInSeason;
+                int indexes = seasons * partsInSeason - partsInSeason;
 
-				for (int i = 0 ; i < indexes; ++i)
-				{
-					temp[i] = sourceValues[i+partsInSeason/2] / centeredAver[i];
-				}
+                for (int i = 0 ; i < indexes; ++i)
+                {
+                    temp[i] = sourceValues[i+partsInSeason/2] / centeredAver[i];
+                }
 
-				for (int i = 0; i < partsInSeason/2; ++i)
-				{
-					seasMark[i] = temp[(seasons-1)*partsInSeason- partsInSeason/2 +i];
-				}
+                for (int i = 0; i < partsInSeason/2; ++i)
+                {
+                    seasMark[i] = temp[(seasons-1)*partsInSeason- partsInSeason/2 +i];
+                }
 
-				for (int i = partsInSeason/2; i < indexes; ++i)
-				{
-					seasMark[i] = temp[i - partsInSeason/2];
-				}
+                for (int i = partsInSeason/2; i < indexes; ++i)
+                {
+                    seasMark[i] = temp[i - partsInSeason/2];
+                }
 
-				double partIndexes[partsInSeason];
+                double partIndexes[partsInSeason];
 
-				for (int i = 0; i < partsInSeason; ++i)
-				{
-					partIndexes[i] = 0;
+                for (int i = 0; i < partsInSeason; ++i)
+                {
+                    partIndexes[i] = 0;
 
-					for (int j = 0; j < seasons-1; ++j)
-					{
-						partIndexes[i] += seasMark[partsInSeason*j + i];
-					}
+                    for (int j = 0; j < seasons-1; ++j)
+                    {
+                        partIndexes[i] += seasMark[partsInSeason*j + i];
+                    }
 
-					partIndexes[i] /= seasons-1;
+                    partIndexes[i] /= seasons-1;
 
-					// std :: cout << partIndexes[i] << std::endl;
-				}
+                    // std :: cout << partIndexes[i] << std::endl;
+                }
 
-				double Yx = 0, sumX= 0, xq= 0, Y= 0;
+                double Yx = 0, sumX= 0, xq= 0, Y= 0;
 
                 for (unsigned int i = 1 ; i <= sourceValues.size(); ++i ) {
-					Yx 	 += i * sourceValues[i-1];
-					sumX += i;
-					xq   += i * i;
-					Y += sourceValues[i-1];
-				}
+                    Yx 	 += i * sourceValues[i-1];
+                    sumX += i;
+                    xq   += i * i;
+                    Y += sourceValues[i-1];
+                }
  
 
-				double a = 0, b = 0;
+                double a = 0, b = 0;
 
-				a = (Yx - (sumX*Y)/sourceValues.size())/(xq - (sumX * sumX)/sourceValues.size());
-				b = Y/sourceValues.size() - a*sumX/sourceValues.size();
+                a = (Yx - (sumX*Y)/sourceValues.size())/(xq - (sumX * sumX)/sourceValues.size());
+                b = Y/sourceValues.size() - a*sumX/sourceValues.size();
 
 
 				
                 for (unsigned int i = sourceValues.size(); i < sourceValues.size() + times; i++) {
                     resultKeys  .push_back(sourceKeys[i%sourceValues.size()]);
                     resultValues.push_back((a*i+b)*partIndexes[i%partsInSeason]);
-				}
+                }
 
 //				double sum = 0;
 //				int counter = 0;
@@ -175,10 +177,10 @@ public:
 //				}
 
 
-				break;
-			}
-		}
-	}
+                break;
+            }
+        }
+    }
 };
 
 #endif

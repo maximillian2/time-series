@@ -76,11 +76,6 @@
        <widget class="QComboBox" name="comboBox">
         <item>
          <property name="text">
-          <string/>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>Баєсові мережі</string>
          </property>
         </item>
@@ -223,7 +218,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

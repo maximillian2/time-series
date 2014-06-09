@@ -16,7 +16,7 @@ Help::Help(QWidget *parent) : QDialog(parent), ui(new Ui::Help)
     QTextStream stream(&file);
     stream.setCodec("UTF-8");
 
-    ui->textBrowser->setText(stream.readAll());
+//    ui->textBrowser->setText(stream.readAll());
 }
 
 Help::~Help()

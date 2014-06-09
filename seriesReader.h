@@ -15,6 +15,7 @@ public:
 	vector<string> getKeys() { return keys; }
 	vector<double> getValues() { return values; }
 
+    virtual ~SeriesReader() {}
 };
 
 #endif

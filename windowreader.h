@@ -16,7 +16,7 @@ class WindowReader : public QDialog, public SeriesReader
 public:
     explicit WindowReader(QWidget *parent = 0);
 
-    ~WindowReader();
+    virtual ~WindowReader();
 
 private slots:
     void on_buttonBox_accepted();

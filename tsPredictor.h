@@ -28,8 +28,13 @@ public:
 
     vector<double> getSourceValues() { return sourceValues; }
 
-    vector<string> getResultKeys()   { return resultKeys; }
+    vector<string> getResultKeys()   { return resultKeys;   }
     vector<double> getResultValues() { return resultValues; }
+
+    void eraseResult() {
+        resultKeys  .clear();
+        resultValues.clear();
+    }
 
     void setPartsInSeason(int parts) {
         if ( parts > 0 ) {
@@ -39,9 +44,9 @@ public:
 
 
     void setReader(SeriesReader* newReader) {
-        if ( newReader != NULL ) {
+//        if ( newReader != NULL ) {
             reader = newReader;
-        }
+//        }
     }
 
 
