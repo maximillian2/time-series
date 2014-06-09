@@ -42,7 +42,7 @@ void WindowReader::on_fillPushButton_clicked()
         {
             QStandardItem* item = new QStandardItem();
             model->setVerticalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text() ) ) );
-            model->setVerticalHeaderItem(1, new QStandardItem( QString(ui->valuePerUnitEdit->text() ) ) );
+            model->setVerticalHeaderItem(1, new QStandardItem(QString(ui->valuePerUnitEdit->text() ) ) );
             model->setItem(row, column, item);
         }
     }
