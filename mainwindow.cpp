@@ -92,16 +92,23 @@ void MainWindow::insertData()
     }
 
     windowReader = new WindowReader(this);
-    windowReader->exec();
 
-    seriesReader = windowReader;
+    // 1 - accepted, 0 - rejected
+    int result = windowReader->exec();
 
-    activeFileLabel->setText(QString("Використовуємо: програмне введення"));
+    if(result)
+    {
+        seriesReader = windowReader;
 
-    ui->groupBox            ->setEnabled(true);
-    ui->calculatePushButton ->setEnabled(true);
+        activeFileLabel->setText(QString("Використовуємо: програмне введення"));
 
-    predictor->setReader(seriesReader);
+        ui->groupBox            ->setEnabled(true);
+        ui->calculatePushButton ->setEnabled(true);
+
+        predictor->setReader(seriesReader);
+    }
+    else
+        activeFileLabel->setText(QString("Нічого не використовуємо"));
 }
 
 void MainWindow::offlineHelp()

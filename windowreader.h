@@ -22,6 +22,8 @@ private slots:
     void on_buttonBox_accepted();
     void on_fillPushButton_clicked();
 
+    void on_spinBox_valueChanged(int arg1);
+
 private:
     QStandardItemModel *model;
     Ui::WindowReader *ui;
