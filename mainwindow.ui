@@ -218,7 +218,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -287,6 +287,9 @@
    </property>
   </action>
   <action name="actionSave_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Зберегти як...</string>
    </property>

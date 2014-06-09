@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     seriesReader = 0;
     predictor    = 0;
-    predictor = new Bayesian(0);
+    predictor = new Bayesian(seriesReader);
 
     connect(ui->actionInsert_Data,    SIGNAL(triggered()), this, SLOT(insertData()));
     connect(ui->actionOpen_file,      SIGNAL(triggered()), this, SLOT(openFile()));
@@ -52,12 +52,17 @@ void MainWindow::on_calculatePushButton_clicked()
         predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
     }
 
+    qDebug() << "before predict";
     predictor->predict(ui->predictPeriodSpinBox->text().toInt());
+    qDebug() << "after";
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
     scene->show();
 
+    ui->actionSave_as->setEnabled(true);
+
     predictor->eraseResult();
+
 }
 
 void MainWindow::exitApplication()
@@ -104,7 +109,6 @@ void MainWindow::insertData()
 
         ui->groupBox            ->setEnabled(true);
         ui->calculatePushButton ->setEnabled(true);
-
         predictor->setReader(seriesReader);
     }
     else
