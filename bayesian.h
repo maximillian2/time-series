@@ -86,11 +86,13 @@ public:
                     {
                         seasonSum[i] += sourceValues[j];
                     }
+                    std::cout << "\nseas sum " << seasonSum[i];
                 }
 
                 for (int i = 0; i < seasSumAmnt; ++i)
                 {
                     seasonAver[i] = seasonSum[i] / seasons;
+                    std::cout << "\nseas aver " << seasonAver[i];
                 }
 
                 double centeredAver[seasSumAmnt-1];
@@ -98,6 +100,7 @@ public:
                 for (int i = 0; i < seasSumAmnt-1; ++i)
                 {
                      centeredAver[i] = (seasonAver[i] + seasonAver[i+1]) / 2.0;
+                     std::cout << "\ncenter sum " << centeredAver[i];
                 }
 
                 double seasMark[seasSumAmnt-1];
@@ -133,23 +136,36 @@ public:
 
                     partIndexes[i] /= seasons-1;
 
-                    // std :: cout << partIndexes[i] << std::endl;
+                     std :: cout << partIndexes[i] << std::endl;
                 }
 
                 double Yx = 0, sumX= 0, xq= 0, Y= 0;
 
+                std::cout << "size=" << sourceValues.size();
+
                 for (unsigned int i = 1 ; i <= sourceValues.size(); ++i ) {
                     Yx 	 += i * sourceValues[i-1];
+                    std :: cout << i * sourceValues[i-1] << '\n';
                     sumX += i;
                     xq   += i * i;
                     Y += sourceValues[i-1];
                 }
  
+                std :: cout << " Yx  == " << Yx << std::endl;
+                std::cout << " sum x " << sumX << std::endl;
+                std::cout << "xQ =  " << xq << std::endl;
+                std::cout << "Y == " << Y << std::endl;
+
 
                 double a = 0, b = 0;
 
-                a = (Yx - (sumX*Y)/sourceValues.size())/(xq - (sumX * sumX)/sourceValues.size());
+                a = -(Yx - (sumX*Y)/sourceValues.size())/(xq - (sumX * sumX)/sourceValues.size());
+
+                std::cout << std::endl << a << '\n';
+
                 b = Y/sourceValues.size() - a*sumX/sourceValues.size();
+
+                std::cout << std::endl << b << '\n';
 
 
 				
@@ -158,23 +174,23 @@ public:
                     resultValues.push_back((a*i+b)*partIndexes[i%partsInSeason]);
                 }
 
-//				double sum = 0;
-//				int counter = 0;
+				double sum = 0;
+				int counter = 0;
 
-//                for (int i = 0; i < resultKeys.size(); ++i)
-//				{
-//                    std::cout << resultKeys[i] << "  " << resultValues[i] << std::endl;
+               for (int i = 0; i < resultKeys.size(); ++i)
+				{
+                   std::cout << resultKeys[i] << "  " << resultValues[i] << std::endl;
 
-//					counter++;
-//                    sum += resultValues[i];
+					counter++;
+                   sum += resultValues[i];
 					
-//					if (counter == partsInSeason) {
-//						std::cout << "\nTotal : " << sum <<"\n\n";
-//						counter = 0;
-//						sum = 0;
-//					}
+					if (counter == partsInSeason) {
+						std::cout << "\nTotal : " << sum <<"\n\n";
+						counter = 0;
+						sum = 0;
+					}
 					
-//				}
+				}
 
 
                 break;
