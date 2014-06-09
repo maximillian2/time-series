@@ -15,6 +15,8 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 
+const QString ONLINE_LINK = "https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series";
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -107,12 +109,13 @@ void MainWindow::insertData()
 void MainWindow::offlineHelp()
 {
     Help *help = new Help(this);
-    help->show();
+//    help->raise();
+    help->exec();
 }
 
 void MainWindow::onlineHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series"));
+    QDesktopServices::openUrl(QUrl(ONLINE_LINK));
 }
 
 void MainWindow::aboutSeries()
@@ -142,8 +145,10 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     if(!seriesReader)
         QMessageBox::warning(this, "No active file", "Select file or other source of data.");
     else
-        if (predictor) delete predictor;
+    {
+       if (predictor) delete predictor;
 
+        ui->groupBox->setEnabled(true);
         switch(index)
         {
         case 1:
@@ -161,9 +166,12 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         case 4:
             predictor = new MarkovModel(seriesReader);
         break;
-        }
-}
 
+        default:
+            ui->groupBox->setEnabled(false);
+        }
+    }
+}
 void MainWindow::on_actionSave_as_triggered()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
