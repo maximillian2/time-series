@@ -112,7 +112,7 @@ void MainWindow::offlineHelp()
 
 void MainWindow::onlineHelp()
 {
-//    QDesktopServices::openUrl(QUrl("https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series"));
+    QDesktopServices::openUrl(QUrl("https://github.com/maximillian2/time-series/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0-%D0%BF%D0%BE-Time-Series"));
 }
 
 void MainWindow::aboutSeries()
