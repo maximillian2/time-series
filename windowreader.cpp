@@ -3,7 +3,7 @@
 
 #include <QStandardItem>
 #include <QtDebug>
-#include <iostream>
+#include <QMessageBox>
 
 WindowReader::WindowReader(QWidget *parent) : QDialog(parent), ui(new Ui::WindowReader)
 {
@@ -11,7 +11,9 @@ WindowReader::WindowReader(QWidget *parent) : QDialog(parent), ui(new Ui::Window
     model = new QStandardItemModel(2, ui->spinBox->value(), this);
 
     ui->tableView->horizontalHeader()->hide();
-//    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->buttonBox->setEnabled(false);
 }
 
 WindowReader::~WindowReader()
@@ -21,13 +23,17 @@ WindowReader::~WindowReader()
 
 void WindowReader::on_buttonBox_accepted()
 {
-        for(int i = 0; i < model->columnCount(); i++)
+    for(int i = 0; i < model->columnCount(); i++)
+    {
+        if(!model->item(0, i)->text().isEmpty() && !model->item(1, i)->text().isEmpty())
         {
             keys.push_back(model->item(0, i)->text().toStdString());
             values.push_back(model->item(1, i)->text().toDouble());
-//            qDebug() << "k = " << model->item(0,i)->text().toLatin1() << "; v = " << model->item(1,i)->text().toDouble();
+            qDebug() << "k = " << model->item(0,i)->text().toLatin1() << "; v = " << model->item(1,i)->text().toDouble();
+        } else {
+            QMessageBox::warning(this, "Пусте поле", "Перевірте правильність введення даних.");
         }
-//        qDebug() << "pushed up.";
+    }
 }
 
 void WindowReader::on_fillPushButton_clicked()
@@ -37,10 +43,12 @@ void WindowReader::on_fillPushButton_clicked()
         for (int column = 0; column < ui->spinBox->value(); ++column)
         {
             QStandardItem* item = new QStandardItem();
-            model->setVerticalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text() ) ) );
-            model->setVerticalHeaderItem(1, new QStandardItem(QString(ui->valuePerUnitEdit->text() ) ) );
+//            model->setVerticalHeaderItem(0, new QStandardItem(QString(ui->unitLineEdit->text() ) ) );
+//            model->setVerticalHeaderItem(1, new QStandardItem(QString(ui->valuePerUnitEdit->text() ) ) );
             model->setItem(row, column, item);
         }
     }
     ui->tableView->setModel(model);
+
+    ui->buttonBox->setEnabled(true);
 }

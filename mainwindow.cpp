@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->actionOffline_Manual, SIGNAL(triggered()), this, SLOT(offlineHelp()));
     connect(ui->actionAbout_Series,   SIGNAL(triggered()), this, SLOT(aboutSeries()));
 
-    activeFileLabel = new QLabel("Using: nothing");
+    activeFileLabel = new QLabel("Нічого не використовуємо");
     ui->statusbar->addWidget(activeFileLabel);
 }
 
@@ -52,9 +52,7 @@ void MainWindow::on_calculatePushButton_clicked()
         predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
     }
 
-
     predictor->predict(ui->predictPeriodSpinBox->text().toInt());
-
 
     scene = new Scene(predictor->getSourceValues(), predictor->getResultValues() /* result vector */ );
     scene->show();
@@ -72,12 +70,12 @@ void MainWindow::openFile()
     if ( seriesReader )
         delete seriesReader;
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Відкрити файл"), "", tr("Текстові файли (*.txt)"));
     if (!fileName.isEmpty())
     {
         QFileInfo fileInfo(fileName);
 
-        activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
+        activeFileLabel->setText(QString("Використовуємо файл: %1").arg(fileInfo.fileName()));
 
         seriesReader = new FileReader(fileName.toStdString());
         predictor->setReader(seriesReader);
@@ -98,7 +96,7 @@ void MainWindow::insertData()
 
     seriesReader = windowReader;
 
-    activeFileLabel->setText(QString("Using: program input"));
+    activeFileLabel->setText(QString("Використовуємо: програмне введення"));
 
     ui->groupBox            ->setEnabled(true);
     ui->calculatePushButton ->setEnabled(true);
@@ -109,7 +107,6 @@ void MainWindow::insertData()
 void MainWindow::offlineHelp()
 {
     Help *help = new Help(this);
-//    help->raise();
     help->exec();
 }
 
@@ -143,7 +140,7 @@ void MainWindow::on_offSeasonRadioButton_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     if(!seriesReader)
-        QMessageBox::warning(this, "No active file", "Select file or other source of data.");
+        QMessageBox::warning(this, "Нема активного джерела", "Виберіть джерело інформації.");
     else
     {
        if (predictor) delete predictor;
@@ -175,7 +172,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
 void MainWindow::on_actionSave_as_triggered()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Відкрити директорію"),
                                                     "/home",
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
