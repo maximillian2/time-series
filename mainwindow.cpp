@@ -73,18 +73,18 @@ void MainWindow::openFile()
         delete seriesReader;
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Text files (*.txt)"));
-    QFileInfo fileInfo(fileName);
+    if (!fileName.isEmpty())
+    {
+        QFileInfo fileInfo(fileName);
 
-    activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
+        activeFileLabel->setText(QString("Using: %1").arg(fileInfo.fileName()));
 
+        seriesReader = new FileReader(fileName.toStdString());
+        predictor->setReader(seriesReader);
 
-
-    seriesReader = new FileReader(fileName.toStdString());
-    predictor->setReader(seriesReader);
-
-
-    ui->groupBox            ->setEnabled(true);
-    ui->calculatePushButton ->setEnabled(true);
+        ui->groupBox            ->setEnabled(true);
+        ui->calculatePushButton ->setEnabled(true);
+    }
 }
 
 void MainWindow::insertData()
@@ -172,12 +172,14 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         }
     }
 }
+
 void MainWindow::on_actionSave_as_triggered()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                     "/home",
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
+
     ofstream out((dir.toStdString() + "/result.txt").c_str());
 
     vector<double> res = predictor->getResultValues();
