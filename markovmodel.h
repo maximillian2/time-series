@@ -2,7 +2,7 @@
 #define MARKOVMODEL_H
 
 #include "seriesReader.h"
-#include "tsPrediction.h"
+#include "tsPredictor.h"
 
 class MarkovModel : public TsPredictor
 {
