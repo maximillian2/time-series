@@ -44,7 +44,7 @@ void MainWindow::on_calculatePushButton_clicked()
     if(!predicted)
     {
         qDebug() << "before predict";
-        predictor->predict(ui->predictPeriodSpinBox->text().toInt());
+        predictor->predict(ui->predictPeriodSpinBox->value());
         predicted = true;
     }
 

@@ -1,173 +1,115 @@
 #include "fuzzyset.h"
+#include <vector>
+#include <iostream>
+#include <QDebug>
 
-//#include "fileReader.h"
-//#include "tsPredictor.h"
-//#include "seriesReader.h"
+using namespace std;
 
-#include <new>
 
-void FuzzySet::predict(int times) {
+void FuzzySet::predict(int n)
+{
+    gamma = 0.32;
+    alpha = gamma;
+    beta = gamma;
 
     sourceKeys   = reader->getKeys();
     sourceValues = reader->getValues();
 
-    switch ( seriesType ) {
-
-        case ( WITHOUT_SEASONAL_VARIATON ) : {
-
-            const int N = 3; //
-
-            vector<string> movingAverageKeys;
-            vector<double> movingAverageValues;
-
-            // auto it = sourceValues.begin();
-
-            // ++it;
-
-            for (unsigned int i = 1; i < sourceKeys.size()-1 ; ++i) {
-                double average = sourceValues[i];
-
-                for ( int j = 1; j <= 1; j ++ ) {
-                    average += sourceValues[i+j];
-                    average += sourceValues[i-j];
-                }
-
-                average /= N;
-
-                movingAverageKeys	.push_back(sourceKeys[i]);
-                movingAverageValues	.push_back(average);
-
-            }
-
-            for ( int t = 0; t < times; ++t ) {
-                double value = movingAverageValues[movingAverageValues.size()-1];
-
-                value += (1.0/3.0)*(sourceValues[sourceValues.size()-1] - sourceValues[sourceValues.size()-2]);
-
-                sourceValues.push_back(value);
-                resultValues.push_back(value);
-
-                int lastSource = sourceValues.size()-1;
-
-                movingAverageValues.push_back((sourceValues[lastSource]+sourceValues[lastSource-1]+sourceValues[lastSource-2]) / 3.0);
-            }
-
-            for (unsigned int i = 0; i < resultValues.size() ; ++i)
-            {
-                std::cout << resultValues[i] << std::endl;
-            }
-
-        break;
-
-        }
-
-        case (WITH_SEASONAL_VARIATON) : {
-            int seasons = sourceValues.size() / partsInSeason;
-            int seasSumAmnt = seasons * partsInSeason - partsInSeason + 1;
-
-            double seasonSum [seasSumAmnt];
-            double seasonAver[seasSumAmnt];
-
-            for (int i = 0; i < seasSumAmnt; ++i)
-            {
-                seasonSum[i] = 0;
-
-                for (int j = i; j < i + seasons; ++j)
-                {
-                    seasonSum[i] += sourceValues[j];
-                }
-            }
-
-            for (int i = 0; i < seasSumAmnt; ++i)
-            {
-                seasonAver[i] = seasonSum[i] / seasons;
-            }
-
-            double centeredAver[seasSumAmnt-1];
-
-            for (int i = 0; i < seasSumAmnt-1; ++i)
-            {
-                 centeredAver[i] = (seasonAver[i] + seasonAver[i+1]) / 2.0;
-            }
-
-            double seasMark[seasSumAmnt-1];
-            double temp     [seasSumAmnt-1];
-
-            int indexes = seasons * partsInSeason - partsInSeason;
-
-            for (int i = 0 ; i < indexes; ++i)
-            {
-                temp[i] = sourceValues[i+partsInSeason/2] / centeredAver[i];
-            }
-
-            for (int i = 0; i < partsInSeason/2; ++i)
-            {
-                seasMark[i] = temp[(seasons-1)*partsInSeason- partsInSeason/2 +i];
-            }
-
-            for (int i = partsInSeason/2; i < indexes; ++i)
-            {
-                seasMark[i] = temp[i - partsInSeason/2];
-            }
-
-            double partIndexes[partsInSeason];
-
-            for (int i = 0; i < partsInSeason; ++i)
-            {
-                partIndexes[i] = 0;
-
-                for (int j = 0; j < seasons-1; ++j)
-                {
-                    partIndexes[i] += seasMark[partsInSeason*j + i];
-                }
-
-                partIndexes[i] /= seasons-1;
-
-                // std :: cout << partIndexes[i] << std::endl;
-            }
-
-            double Yx = 0, sumX= 0, xq= 0, Y= 0;
-
-            for (unsigned int i = 1 ; i <= sourceValues.size(); ++i ) {
-                Yx 	 += i * sourceValues[i-1]/*+qrand()%5*/;
-                sumX += i;
-                xq   += i * i;
-                Y += sourceValues[i-1];
-            }
-
-
-            double a = 0, b = 0;
-
-            a = (Yx - (sumX*Y)/sourceValues.size())/(xq + (sumX * sumX)/sourceValues.size());
-            b = Y/sourceValues.size() - a*sumX/sourceValues.size();
-
-
-
-            for (unsigned int i = sourceValues.size(); i < sourceValues.size() + times; i++) {
-                resultKeys  .push_back(sourceKeys[i%sourceValues.size()]);
-                resultValues.push_back((a*i+b)*partIndexes[i%partsInSeason]);
-            }
-
-//				double sum = 0;
-//				int counter = 0;
-
-//                for (int i = 0; i < resultKeys.size(); ++i)
-//				{
-//                    std::cout << resultKeys[i] << "  " << resultValues[i] << std::endl;
-
-//					counter++;
-//                    sum += resultValues[i];
-
-//					if (counter == partsInSeason) {
-//						std::cout << "\nTotal : " << sum <<"\n\n";
-//						counter = 0;
-//						sum = 0;
-//					}
-
-//				}
-
-
-            break;
-        }
+    omega.push_back(0);
+    omega.push_back(sourceValues[1]);
+    T.push_back(0);
+    T.push_back(sourceValues[1]-sourceValues[0]);
+    for(int i = 2; i < sourceValues.size(); i++)
+    {
+        omega.push_back((1-alpha)*(omega[i-1]+T[i-1])+(alpha)*sourceValues[i]);
+        T.push_back((1-beta)*T[i-1]+(beta)*(omega[i]-omega[i-1]));
+//        qDebug() << omega[i] << "---" << T[i];
+    }
+    max = omega[1];
+    min = omega[1];
+    for(int i = 1; i < omega.size(); i++)
+    {
+        if(omega[i]<min)
+            min=omega[i];
+        if(omega[i]>max)
+            max=omega[i];
+    }
+    max++;
+    interval = (max-min)/5;
+//    qDebug() << "Interval - " << interval << " max - " << max << " min - " << min;
+    for(int i = 1; i < omega.size(); i++)
+    {
+        if(omega[i]<min+interval)
+            first.push_back(T[i]);
+        else if(min+interval<=omega[i]&&omega[i]<min+interval*2)
+            second.push_back(T[i]);
+        else if(min+interval*2<=omega[i]&&omega[i]<min+interval*3)
+            third.push_back(T[i]);
+        else if(min+interval*3<=omega[i]&&omega[i]<min+interval*4)
+            fourth.push_back(T[i]);
+        else if(min+interval*4<=omega[i]&&omega[i]<min+interval*5)
+            fifth.push_back(T[i]);
+    }
+    double temp=0;
+    for(int i = 0; i<first.size(); i++)
+    {
+        temp+=first[i];
+//        qDebug() << "First " << first[i];
+    }
+    temp/=first.size();
+//    qDebug() << "Temp 1 - " << temp;
+    for_1=temp;
+    temp=0;
+    for(int i = 0; i<second.size(); i++)
+    {
+        temp+=second[i];
+//        qDebug() << "Second " << second[i];
+    }
+    temp/=second.size();
+//    qDebug() << "Temp 2 - " << temp;
+    for_2=temp;
+    temp=0;
+    for(int i = 0; i<third.size(); i++)
+    {
+        temp+=third[i];
+//        qDebug() << "Third " << third[i];
+    }
+    temp/=third.size();
+//    qDebug() << "Temp 3 - " << temp;
+    for_3=temp;
+    temp=0;
+    for(int i = 0; i<fourth.size(); i++)
+    {
+        temp+=fourth[i];
+//        qDebug() << "Fourth " << fourth[i];
+    }
+    temp/=fourth.size();
+//    qDebug() << "Temp 4 - " << temp;
+    for_4=temp;
+    temp=0;
+    for(int i = 0; i<fifth.size(); i++)
+    {
+        temp+=fifth[i];
+//        qDebug() << "Fifth " << fifth[i];
+    }
+    temp/=fifth.size();
+//    qDebug() << "Temp 5 - " << temp;
+    for_5=temp;
+    temp=0;
+//    qDebug() << for_1 << " " << for_2 << " " << for_3 << " " << for_4 << " " << for_5;
+    for(int i = 0; i < n; i++)
+    {
+        if(omega[omega.size()-1]<min+interval)
+            resultValues.push_back(omega[omega.size()-1]+for_1);
+        else if(omega[omega.size()-1]>=min+interval&&omega[omega.size()-1]<min+interval*2)
+            resultValues.push_back(omega[omega.size()-1]+for_2);
+        else if(omega[omega.size()-1]>=min+interval*2&&omega[omega.size()-1]<min+interval*3)
+            resultValues.push_back(omega[omega.size()-1]+for_3);
+        else if(omega[omega.size()-1]>=min+interval*3&&omega[omega.size()-1]<min+interval*4)
+            resultValues.push_back(omega[omega.size()-1]+for_4);
+        else if(omega[omega.size()-1]>=min+interval*4/*&&omega[omega.size()-1]<min+interval*5*/)
+            resultValues.push_back(omega[omega.size()-1]+for_5);
+        omega.push_back(resultValues[resultValues.size()-1]);
+//        qDebug() << "omega" <<omega[omega.size()-1];
     }
 }
