@@ -48,11 +48,19 @@ void MainWindow::on_calculatePushButton_clicked()
 
     if ( ui->onSeasonRadioButton->isChecked() ) {
 
+<<<<<<< HEAD
+    if(!predicted)
+    {
+        qDebug() << "before predict";
+        predictor->predict(ui->predictPeriodSpinBox->value());
+        predicted = true;
+=======
         predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
         predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
     } else {
         predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
+>>>>>>> f9adedea77604814cbd7340987351e831938ed08
     }
 
     qDebug() << "before predict";
