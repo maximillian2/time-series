@@ -43,6 +43,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_calculatePushButton_clicked()
 {
+    if (predictor->getResultValues().size())
+        predictor->eraseResult();
+
     if ( ui->onSeasonRadioButton->isChecked() ) {
 
         predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
@@ -61,7 +64,7 @@ void MainWindow::on_calculatePushButton_clicked()
 
     ui->actionSave_as->setEnabled(true);
 
-    predictor->eraseResult();
+//    predictor->eraseResult();
 
 }
 
