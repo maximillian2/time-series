@@ -48,19 +48,11 @@ void MainWindow::on_calculatePushButton_clicked()
 
     if ( ui->onSeasonRadioButton->isChecked() ) {
 
-<<<<<<< HEAD
-    if(!predicted)
-    {
-        qDebug() << "before predict";
-        predictor->predict(ui->predictPeriodSpinBox->value());
-        predicted = true;
-=======
         predictor->seriesType = TsPredictor::WITH_SEASONAL_VARIATON;
         predictor->setPartsInSeason(ui->partsSpinBox->text().toInt());
 
     } else {
         predictor->seriesType = TsPredictor::WITHOUT_SEASONAL_VARIATON;
->>>>>>> f9adedea77604814cbd7340987351e831938ed08
     }
 
     qDebug() << "before predict";
@@ -170,19 +162,19 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         ui->groupBox->setEnabled(true);
         switch(index)
         {
-        case 1:
+        case 0:
             predictor  = new Bayesian(seriesReader);
         break;
 
-        case 2:
+        case 1:
             predictor = new FuzzySet(seriesReader);
         break;
 
-        case 3:
+        case 2:
             predictor = new NeuralNetwork(seriesReader);
         break;
 
-        case 4:
+        case 3:
             predictor = new MarkovModel(seriesReader);
         break;
 

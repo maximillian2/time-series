@@ -4,6 +4,7 @@
 #include "fileReader.h"
 #include "tsPredictor.h"
 #include "seriesReader.h"
+#include <QtDebug>
 
 #include <new>
 #include <iostream>
@@ -16,7 +17,7 @@ public:
 
     //  Only filled  result vectors.
 	void predict(int times) {
-
+        qDebug() << "i'm in predict";
 
         sourceKeys   = reader->getKeys();
         sourceValues = reader->getValues();
