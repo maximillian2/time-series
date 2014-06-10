@@ -1,5 +1,6 @@
 #include "neuralnetwork.h"
 #include <QtDebug>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               #include <random>
 
 void NeuralNetwork::predict(int times){
 
@@ -107,9 +108,8 @@ void NeuralNetwork::predict(int times){
                 }
 
                 partIndexes[i] /= seasons-1;
-                partIndexes[i] *= (0.5 + (random()%5)/10.0);
+                partIndexes[i] *= (0.8 + (random()%4)/10.0);
 
-                #include <random>
                  std :: cout << partIndexes[i] << std::endl;
             }
 

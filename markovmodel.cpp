@@ -106,7 +106,7 @@ void MarkovModel::predict(int times)
                 }
 
                 partIndexes[i] /= seasons-1;
-                partIndexes[i] *= (0.5 + (random()%5)/10.0);
+                partIndexes[i] *= (0.75 + (random()%3)/10.0);
 
                 #include <random>
                  std :: cout << partIndexes[i] << std::endl;

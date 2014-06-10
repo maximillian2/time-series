@@ -189,7 +189,7 @@ void FuzzySet::predict(int n)
                 }
 
                 partIndexes[i] /= seasons-1;
-                partIndexes[i] *= (0.5 + (random()%5)/10.0);
+                partIndexes[i] *= (0.7 + (random()%4)/10.0);
 
                 #include <random>
                  std :: cout << partIndexes[i] << std::endl;

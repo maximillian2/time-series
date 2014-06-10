@@ -81,7 +81,7 @@ void MainWindow::openFile()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Відкрити файл"), "", tr("Текстові файли (*.txt)"));
     if (!fileName.isEmpty())
     {
-        QFileInfo fileInfo(fileName);
+        QFileInfo fileInfo(/*fileName*/QString("/home/maxi/Qt_Projects/maximillian2-time-series/test.txt"));
 
         activeFileLabel->setText(QString("Використовуємо файл: %1").arg(fileInfo.fileName()));
 
